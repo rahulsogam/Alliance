@@ -2,3 +2,39 @@ Front-end technologies - Reactjs,HTML,CSS,Bootstrap
 Backend Technologies - JAVA,SpringBoot,SQL.
 
 
+Database queries
+CREATE TABLE STMS.dbo.salary (
+	in_hand_salary int,
+	employee_name nvarchar(50),
+	salary int
+)
+CREATE TABLE STMS.dbo.Employee (
+	Employee_age int,
+	employee_name nvarchar(50),
+	Designation nvarchar(50),
+
+)
+CREATE TABLE STMS.dbo.attendance (
+		Present_days int,
+		employee_id int,
+		puchin_date int,
+		puchout_date int,
+		
+)
+CREATE TABLE STMS.dbo.products(
+		
+	product_id int,
+	product_name nvarchar(50),
+	price int,
+	exp_date int
+)
+CREATE TABLE STMS.dbo.customers(
+	cust_name nvarchar(50),
+	cust_email nvarchar(50),
+	cust_no int
+)
+CREATE TABLE STMS.dbo.dealers(
+	dealer_name nvarchar(50),
+	dealer_email nvarchar(50),
+	dealer_no int
+)
