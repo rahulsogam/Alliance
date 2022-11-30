@@ -1,4 +1,4 @@
-package com.stms.controller.StoreManagementBackend;
+package com.stms.controller;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
