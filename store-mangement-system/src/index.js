@@ -8,9 +8,10 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore({reducer: {}}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
 root.render(
   <React.StrictMode>
-    <Provider>
+    <Provider store={store}>
          <App /> 
     </Provider>
   </React.StrictMode>
