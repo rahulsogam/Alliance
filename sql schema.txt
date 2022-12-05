@@ -1,34 +1,34 @@
-CREATE TABLE STMS.dbo.salary (
+CREATE TABLE salary (
 	in_hand_salary int,
 	employee_name nvarchar(50),
 	salary int
 )
-CREATE TABLE STMS.dbo.Employee (
+CREATE TABLE Employee (
 	Employee_age int,
 	employee_name nvarchar(50),
 	Designation nvarchar(50),
 
 )
-CREATE TABLE STMS.dbo.attendance (
+CREATE TABLE attendance (
 		Present_days int,
 		employee_id int,
 		puchin_date int,
 		puchout_date int,
 		
 )
-CREATE TABLE STMS.dbo.products(
+CREATE TABLE products(
 		
 	product_id int,
 	product_name nvarchar(50),
 	price int,
 	exp_date int
 )
-CREATE TABLE STMS.dbo.customers(
+CREATE TABLE customers(
 	cust_name nvarchar(50),
 	cust_email nvarchar(50),
 	cust_no int
 )
-CREATE TABLE STMS.dbo.dealers(
+CREATE TABLE dealers(
 	dealer_name nvarchar(50),
 	dealer_email nvarchar(50),
 	dealer_no int
