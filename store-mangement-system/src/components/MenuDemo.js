@@ -1,51 +1,48 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useRef} from 'react';
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Steps } from 'primereact/steps';
-import { TabMenu } from 'primereact/tabmenu';
+// import { Steps } from 'primereact/steps';
+// import { TabMenu } from 'primereact/tabmenu';
 import { TieredMenu } from 'primereact/tieredmenu';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
 import { ContextMenu } from 'primereact/contextmenu';
 import { MegaMenu } from 'primereact/megamenu';
 import { PanelMenu } from 'primereact/panelmenu';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import PersonalDemo from '../components/menu/PersonalDemo';
-import ConfirmationDemo from '../components/menu/ConfirmationDemo';
-import PaymentDemo from '../components/menu/PaymentDemo';
-import SeatDemo from '../components/menu/SeatDemo';
+// import PersonalDemo from '../components/menu/PersonalDemo';
+// import ConfirmationDemo from '../components/menu/ConfirmationDemo';
+// import PaymentDemo from '../components/menu/PaymentDemo';
+// import SeatDemo from '../components/menu/SeatDemo';
 
 const MenuDemo = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
+   // const [activeIndex, setActiveIndex] = useState(0);
 
     const menu = useRef(null);
     const contextMenu = useRef(null);
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const checkActiveIndex = useCallback(() => {
-        const paths = location.pathname.split('/');
-        const currentPath = paths[paths.length - 1];
+    // const checkActiveIndex = useCallback(() => {
+    //     const paths = location.pathname.split('/');
+    //     const currentPath = paths[paths.length - 1];
 
-        switch (currentPath) {
-            case 'seat':
-                setActiveIndex(1);
-                break;
-            case 'payment':
-                setActiveIndex(2);
-                break;
-            case 'confirmation':
-                setActiveIndex(3);
-                break;
-            default:
-                break;
-        }
-    }, [location]);
+    //     switch (currentPath) {
+    //         case 'seat':
+    //             setActiveIndex(1);
+    //             break;
+    //         case 'payment':
+    //             setActiveIndex(2);
+    //             break;
+    //         case 'confirmation':
+    //             setActiveIndex(3);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }, [location]);
 
-    useEffect(() => {
-        checkActiveIndex();
-    }, [checkActiveIndex]);
+    // useEffect(() => {
+    //     checkActiveIndex();
+    // }, [checkActiveIndex]);
 
     const nestedMenuitems = [
         {
@@ -127,12 +124,12 @@ const MenuDemo = () => {
     const breadcrumbHome = { icon: 'pi pi-home', to: '/' };
     const breadcrumbItems = [{ label: 'Computer' }, { label: 'Notebook' }, { label: 'Accessories' }, { label: 'Backpacks' }, { label: 'Item' }];
 
-    const wizardItems = [
-        { label: 'Personal', command: () => navigate('/menu') },
-        { label: 'Seat', command: () => navigate('/menu/seat') },
-        { label: 'Payment', command: () => navigate('/menu/payment') },
-        { label: 'Confirmation', command: () => navigate('/menu/confirmation') }
-    ];
+    // const wizardItems = [
+    //     { label: 'Personal', command: () => navigate('/menu') },
+    //     { label: 'Seat', command: () => navigate('/menu/seat') },
+    //     { label: 'Payment', command: () => navigate('/menu/payment') },
+    //     { label: 'Confirmation', command: () => navigate('/menu/confirmation') }
+    // ];
 
     const tieredMenuItems = [
         {
@@ -502,7 +499,7 @@ const MenuDemo = () => {
                 </div>
             </div>
 
-            <div className="col-12 md:col-6">
+            {/* <div className="col-12 md:col-6">
                 <div className="card card-w-title">
                     <h5>Steps</h5>
                     <Steps model={wizardItems} activeIndex={activeIndex} onSelect={(e) => setActiveIndex(e.index)} readOnly={false} />
@@ -513,9 +510,9 @@ const MenuDemo = () => {
                         <Route path={'/seat'} element={<SeatDemo />} />
                     </Routes>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="col-12 md:col-6">
+            {/* <div className="col-12 md:col-6">
                 <div className="card card-w-title">
                     <h5>TabMenu</h5>
                     <TabMenu model={wizardItems} activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)} />
@@ -526,7 +523,7 @@ const MenuDemo = () => {
                         <Route path={'/seat'} element={<SeatDemo />} />
                     </Routes>
                 </div>
-            </div>
+            </div> */}
 
             <div className="col-12 md:col-4">
                 <div className="card">
