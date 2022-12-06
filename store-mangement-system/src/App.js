@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import {useLocation } from 'react-router-dom';
 
 import AppTopbar from './AppTopbar';
 import AppFooter from './AppFooter';
@@ -9,33 +9,7 @@ import AppSearch from './AppSearch';
 import AppRightMenu from './AppRightMenu';
 import AppBreadcrumb from './AppBreadcrumb';
 import {menu} from './components/MenuItems'
-
-import Dashboard from './components/Dashboard';
-import FormLayoutDemo from './components/FormLayoutDemo';
-import InputDemo from './components/InputDemo';
-import FloatLabelDemo from './components/FloatLabelDemo';
-import ButtonDemo from './components/ButtonDemo';
-import TableDemo from './components/TableDemo';
-import ListDemo from './components/ListDemo';
-import TreeDemo from './components/TreeDemo';
-import PanelDemo from './components/PanelDemo';
-import OverlayDemo from './components/OverlayDemo';
-import MediaDemo from './components/MediaDemo';
-import MenuDemo from './components/MenuDemo';
-import MessagesDemo from './components/MessagesDemo';
-import FileDemo from './components/FileDemo';
-import ChartDemo from './components/ChartDemo';
-import MiscDemo from './components/MiscDemo';
-import Documentation from './components/Documentation';
-import BlocksDemo from './components/BlocksDemo';
-import IconsDemo from './utilities/IconsDemo';
-import CrudDemo from './pages/CrudDemo';
-import CalendarDemo from './pages/CalendarDemo';
-import Invoice from './pages/Invoice';
-import Help from './pages/Help';
-import EmptyPage from './pages/EmptyPage';
-import InvalidStateDemo from './components/InvalidStateDemo';
-import TimelineDemo from './pages/TimelineDemo';
+import {breadcrumb} from './components/BreadcrumItem'
 
 import PrimeReact from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
@@ -44,6 +18,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import './App.scss';
+import RoutesItems from './service/RouterItems';
 
 const App = () => {
     const [menuActive, setMenuActive] = useState(false);
@@ -72,38 +47,6 @@ const App = () => {
     let notificationMenuClick = false;
     let rightMenuClick = false;
     let configClick = false;
-
-    const breadcrumb = [
-        { path: '/', parent: 'Dashboard', label: 'Dashboard' },
-        { path: '/formlayout', parent: 'UI Kit', label: 'Form Layout' },
-        { path: '/input', parent: 'UI Kit', label: 'Input' },
-        { path: '/floatlabel', parent: 'UI Kit', label: 'Float Label' },
-        { path: '/invalidstate', parent: 'UI Kit', label: 'Invalid State' },
-        { path: '/button', parent: 'UI Kit', label: 'Button' },
-        { path: '/table', parent: 'UI Kit', label: 'Table' },
-        { path: '/list', parent: 'UI Kit', label: 'List' },
-        { path: '/tree', parent: 'UI Kit', label: 'Tree' },
-        { path: '/panel', parent: 'UI Kit', label: 'Panel' },
-        { path: '/overlay', parent: 'UI Kit', label: 'Overlay' },
-        { path: '/media', parent: 'UI Kit', label: 'Media' },
-        { path: '/menu', parent: 'UI Kit', label: 'Menu' },
-        { path: '/menu/seat', parent: 'UI Kit', label: 'Menu' },
-        { path: '/menu/payment', parent: 'UI Kit', label: 'Menu' },
-        { path: '/menu/confirmation', parent: 'UI Kit', label: 'Menu' },
-        { path: '/messages', parent: 'UI Kit', label: 'Messages' },
-        { path: '/file', parent: 'UI Kit', label: 'File' },
-        { path: '/chart', parent: 'UI Kit', label: 'Charts' },
-        { path: '/misc', parent: 'UI Kit', label: 'Misc' },
-        { path: '/icons', parent: 'Utilities', label: 'Icons' },
-        { path: '/blocks', parent: 'PrimeBlocks', label: 'Blocks' },
-        { path: '/crud', parent: 'Utilities', label: 'Crud' },
-        { path: '/calendar', parent: 'PrimeBlocks', label: 'Calendar' },
-        { path: '/timeline', parent: 'Pages', label: 'Timeline' },
-        { path: '/invoice', parent: 'Pages', label: 'Invoice' },
-        { path: '/help', parent: 'Pages', label: 'Help' },
-        { path: '/empty', parent: 'Pages', label: 'Empty Page' },
-        { path: '/documentation', parent: 'Pages', label: 'Documentation' }
-    ];
 
     let meta = breadcrumb.find((obj) => {
         return obj.path === location.pathname;
@@ -449,34 +392,7 @@ const App = () => {
                     <div className="layout-breadcrumb viewname" style={{ textTransform: 'uppercase' }}>
                         <AppBreadcrumb meta={meta} />
                     </div>
-                    <Routes>
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/formlayout" element={<FormLayoutDemo />} />
-                        <Route path="/input" element={<InputDemo />} />
-                        <Route path="/floatlabel" element={<FloatLabelDemo />} />
-                        <Route path="/invalidstate" element={<InvalidStateDemo />} />
-                        <Route path="/button" element={<ButtonDemo />} />
-                        <Route path="/table" element={<TableDemo />} />
-                        <Route path="/list" element={<ListDemo />} />
-                        <Route path="/tree" element={<TreeDemo />} />
-                        <Route path="/panel" element={<PanelDemo />} />
-                        <Route path="/overlay" element={<OverlayDemo />} />
-                        <Route path="/media" element={<MediaDemo />} />
-                        <Route path="/menu/*" element={<MenuDemo />} />
-                        <Route path="/messages" element={<MessagesDemo />} />
-                        <Route path="/file" element={<FileDemo />} />
-                        <Route path="/chart" element={<ChartDemo colorMode={colorScheme} location={location} />} />
-                        <Route path="/misc" element={<MiscDemo />} />
-                        <Route path="/icons" element={<IconsDemo />} />
-                        <Route path="/crud" element={<CrudDemo />} />
-                        <Route path="/blocks" element={<BlocksDemo />} />
-                        <Route path="/calendar" element={<CalendarDemo />} />
-                        <Route path="/timeline" element={<TimelineDemo />} />
-                        <Route path="/invoice" element={<Invoice logoUrl={logoUrl} location={location} />} />
-                        <Route path="/help" element={<Help />} />
-                        <Route path="/empty" element={<EmptyPage />} />
-                        <Route path="/documentation" element={<Documentation />} />
-                    </Routes>
+                    <RoutesItems location={location} logoUrl={logoUrl} colorScheme={colorScheme}/>
                 </div>
 
                 <AppFooter />
