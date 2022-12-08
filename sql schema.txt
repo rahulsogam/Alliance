@@ -1,35 +1,80 @@
-CREATE TABLE STMS.dbo.salary (
+CREATE TABLE salary (
 	in_hand_salary int,
 	employee_name nvarchar(50),
-	salary int
+	designation_salary int
 )
-CREATE TABLE STMS.dbo.Employee (
+CREATE TABLE Employee (
+	Employee_id int,
 	Employee_age int,
 	employee_name nvarchar(50),
 	Designation nvarchar(50),
 
 )
-CREATE TABLE STMS.dbo.attendance (
+CREATE TABLE attendance (
 		Present_days int,
 		employee_id int,
 		puchin_date int,
 		puchout_date int,
 		
 )
-CREATE TABLE STMS.dbo.products(
+CREATE TABLE products(
 		
 	product_id int,
 	product_name nvarchar(50),
 	price int,
-	exp_date int
+	exp_date int,
+	quantity int,
+	supply nvarchar(50)
 )
-CREATE TABLE STMS.dbo.customers(
+CREATE TABLE customers(
+	cust_id int,
 	cust_name nvarchar(50),
 	cust_email nvarchar(50),
-	cust_no int
+	cust_no int,
+	cust_invoice int
 )
-CREATE TABLE STMS.dbo.dealers(
+CREATE TABLE dealers(
 	dealer_name nvarchar(50),
 	dealer_email nvarchar(50),
-	dealer_no int
+	dealer_no int,
+	product_no int,
+	location_id int,
+	Product_actual_price int
 )
+CREATE TABLE designation(
+	Dsgn_id int,
+	designation_salary int
+)
+CREATE TABLE manager(
+	manager_mobile int,
+	manager_email nvarchar(50),
+	Employee_id int
+)
+CREATE TABLE category(
+	category_id int,
+	category_name nvarchar(50),
+	product_id int
+)
+CREATE TABLE Location(
+	location_id int,
+	zip_code int,
+	city nvarchar(50),
+	street nvarchar(50)
+)
+CREATE TABLE Database_users(
+	Employee_id int,
+	Username nvarchar(50),
+	password nvarchar(50)
+)
+CREATE TABLE payment(
+	transaction_id int,
+	amount_piad int,
+	mode nvarchar(50),
+	transaction_date int
+)	
+INSERT INTO Employee(Employee_id,Employee_age,employee_name,Designation) VALUES
+(100,26,'Jay',Manager),
+(101,25,'Rahul',Employee),
+(102,25,'Sarvesh',Employee),
+(103,28,'Sagar',Employee),
+(104,35,'Shreyash',Employee);

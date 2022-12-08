@@ -1,6 +1,8 @@
 Front-end technologies - Reactjs,HTML,CSS,Bootstrap
 Backend Technologies - JAVA,SpringBoot,SQL.
 
+Hosted Server Link:management-server.database.windows.net
+AdminID:10616280@mydbs.ie 
 
 Database queries
 CREATE TABLE STMS.dbo.salary (
