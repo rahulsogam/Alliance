@@ -1,13 +1,14 @@
-package com.stms.controller;
+package com.stms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StoreManagementBackendApplication {
+public class StoreManagementBackend1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StoreManagementBackendApplication.class, args);
+		SpringApplication.run(StoreManagementBackend1Application.class, args);
+		System.out.println("HELLO WORLD");
 	}
 
 }
