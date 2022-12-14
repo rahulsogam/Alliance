@@ -82,6 +82,50 @@ public class EmpserviceImpl implements Empservice{
 			}
 		return ans;
 	}
+
+
+	@Override
+	public Boolean getLogin(Object id, Object pass) {
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.GET_EMP_EMAIL);
+			//preparedStatement= connection.prepareStatement("select * from Employee em where em.employeeEmail='"+id+"'");
+			rs=preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println(rs.getString("employeePassword")+""+pass);
+				if(pass.equals(rs.getString("employeePassword"))) {
+				return true;
+			}
+			}
+		}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		return false;
+	}
+
+
+	@Override
+	public JSONObject dashboardAccess() {
+		JSONObject result= new JSONObject();
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.GET_EMP_EMAIL);
+			//preparedStatement= connection.prepareStatement("select * from Employee em where em.employeeEmail='"+id+"'");
+			rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				result.put("ID",rs.getString("employeeID"));
+				result.put("Name", rs.getString("employeeName"));
+				result.put("Address",rs.getString("employeeAddress"));
+				result.put("Email",rs.getString("employeeEmail"));	
+			}
+		}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		return result;
+	}
 	
 	
 
