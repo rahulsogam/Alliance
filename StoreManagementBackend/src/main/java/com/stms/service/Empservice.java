@@ -1,10 +1,9 @@
 package com.stms.service;
 
-import java.util.List;
-
-import com.stms.model.Employee;
+import org.json.JSONObject;
 
 public interface Empservice {
 
-	List<Employee> getAllEmp();
+	JSONObject getAllEmp();
+	JSONObject getEmpSal();
 }
