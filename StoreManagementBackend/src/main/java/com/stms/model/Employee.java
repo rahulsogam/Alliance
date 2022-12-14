@@ -24,6 +24,7 @@ public class Employee {
 	private String Designation;
 	
 	
+	
 	public Employee() {
 		
 	}
@@ -32,10 +33,10 @@ public class Employee {
 
 	public Employee(String employee_id, String employee_age, String employee_name, String designation) {
 		super();
-		Employee_id = employee_id;
-		Employee_age = employee_age;
+		this.Employee_id = employee_id;
+		this.Employee_age = employee_age;
 		this.employee_name = employee_name;
-		Designation = designation;
+		this.Designation = designation;
 	}
 
 

@@ -1,8 +1,11 @@
 package com.stms.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +22,18 @@ public class Designation {
 	
 	@Column(name = "Designation")
 	private String Designation;
+	
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "designation")
+	Salary salary;
+	
+	
+	public Salary getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Salary salary) {
+		this.salary = salary;
+	}
 
 	public String getDsgn_id() {
 		return Dsgn_id;
@@ -47,11 +62,12 @@ public class Designation {
 	public Designation() {
 
 	}
+	
 	public Designation(String dsgn_id, String designation_salary, String designation) {
 		super();
-		Dsgn_id = dsgn_id;
+		this.Dsgn_id = dsgn_id;
 		this.designation_salary = designation_salary;
-		Designation = designation;
+		this.Designation = designation;
 	}
 	
 	
