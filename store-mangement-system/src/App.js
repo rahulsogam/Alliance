@@ -7,7 +7,6 @@ import AppFooter from './AppFooter';
 import AppConfig from './AppConfig';
 import AppSearch from './AppSearch';
 import AppRightMenu from './AppRightMenu';
-import AppBreadcrumb from './AppBreadcrumb';
 import {menu} from './components/MenuItems'
 import {breadcrumb} from './components/BreadcrumItem'
 
@@ -390,7 +389,7 @@ const App = () => {
 
                 <div className="layout-content">
                     <div className="layout-breadcrumb viewname" style={{ textTransform: 'uppercase' }}>
-                        <AppBreadcrumb meta={meta} />
+                        Dashboard
                     </div>
                     <RoutesItems location={location} logoUrl={logoUrl} colorScheme={colorScheme}/>
                 </div>
