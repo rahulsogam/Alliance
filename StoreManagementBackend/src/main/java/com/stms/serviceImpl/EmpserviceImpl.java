@@ -10,13 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.stms.config.SqlQuery;
 import com.stms.model.Employee;
 import com.stms.repo.Emp_Repo;
 import com.stms.service.Empservice;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

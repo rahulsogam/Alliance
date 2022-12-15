@@ -1,9 +1,12 @@
 package com.stms.controller;
 
+<<<<<<< HEAD
+=======
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+>>>>>>> 6cae47a1de684b191ac2319e9a82c81d8dac593d
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
+=======
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+>>>>>>> 6cae47a1de684b191ac2319e9a82c81d8dac593d
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stms.config.Request;
 import com.stms.config.Response;
-import com.stms.model.Employee;
 import com.stms.service.Empservice;
 
 @CrossOrigin
@@ -30,21 +35,6 @@ public class EmpController {
 	@Autowired
 	Empservice empservice;
 	
-	/*
-	 * @RequestMapping(path = "api/v1", method = RequestMethod.GET) public
-	 * ResponseEntity<Response> getAllStudents() throws
-	 * StudentManagementSystemException {
-	 * 
-	 * List<Student> studentList = studentService.getAllStudents();
-	 * 
-	 * if (studentList == null || studentList.isEmpty()) {
-	 * 
-	 * logger.info("No data found or list is empty"); throw new
-	 * StudentManagementSystemException("", HttpStatus.OK, studentList); }
-	 * 
-	 * return new ResponseEntity<Response>(new Response("success", studentList,
-	 * null), HttpStatus.OK); }
-	 */
 	@GetMapping(path = "/All")
 	ResponseEntity<Response> getAll(){
 		System.out.println("COntroller"+" "+empservice.getAllEmp());
