@@ -89,7 +89,7 @@ public class EmpserviceImpl implements Empservice{
 		try {
 			connection= dataSource.getConnection();
 			preparedStatement= connection.prepareStatement(SqlQuery.GET_EMP_EMAIL);
-			//preparedStatement= connection.prepareStatement("select * from Employee em where em.employeeEmail='"+id+"'");
+			preparedStatement.setString(1, id.toString());
 			rs=preparedStatement.executeQuery();
 			
 			if(rs.next()) {
@@ -107,12 +107,12 @@ public class EmpserviceImpl implements Empservice{
 
 
 	@Override
-	public JSONObject dashboardAccess() {
+	public JSONObject dashboardAccess(Object id) {
 		JSONObject result= new JSONObject();
 		try {
 			connection= dataSource.getConnection();
 			preparedStatement= connection.prepareStatement(SqlQuery.GET_EMP_EMAIL);
-			//preparedStatement= connection.prepareStatement("select * from Employee em where em.employeeEmail='"+id+"'");
+			preparedStatement.setString(1, id.toString());
 			rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				result.put("ID",rs.getString("employeeID"));
