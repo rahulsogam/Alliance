@@ -58,7 +58,7 @@ public class EmpController {
 		JSONObject data = new JSONObject();
 		boolean sts = empservice.getLogin(payload.get("id"),payload.get("pass"));
 		if(sts) {
-			  
+			data = empservice.dashboardAccess(payload.get("id"));
 			data.put("status", true);
 		}
 		else {

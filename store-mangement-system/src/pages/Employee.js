@@ -74,11 +74,10 @@ const Employee = () => {
         })
         Axios.get("/EMP/Designation").then((res) => {
 
-            setDropdownValues(res.data.data.Dealers)
+            setDropdownValues(res.data.data.Designation)
         }).catch((err) => {
             console.log(err)
         })
-        console.log(dropdownValues);
         // eslint-disable-next-line
     }, []);
 
@@ -134,10 +133,11 @@ const Employee = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         let _products = [...products];
-        let _product = { ...product,Salary:"20000"};
+        let _product = { ...product,Salary:"20000",Designation:dropdownValue};
         _products = [..._products, _product]
         setProducts(_products);
         setProduct(emptyProduct);
+        setProductDialog(false);
         await Axios.post("/EMP/create", { name: product.Name, address: product.Address,email:product.Email,designation:dropdownValue.name,password:product.pwd }).then((res) => {
             console.log(res);
             setProductDialog(false);
@@ -149,13 +149,14 @@ const Employee = () => {
 
         let _products = [...products];
         let _product = { ...product};
-        const index = findIndexById(product.CatId);
+        const index = findIndexById(product.ID);
         _products[index] = _product;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Employee Updated', life: 3000 });
         setProducts(_products);
         setProduct(emptyProduct);
-        await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
-            setEditDialog(false);
+        setEditDialog(false);
+        await Axios.patch("/EMP/update", { id: product.ID, name:product.Name, address:product.Address, email:product.Email, password:product.pwd}).then((res) => {
+             console.log(res);
         })
     };
 
@@ -170,14 +171,14 @@ const Employee = () => {
     };
 
     const deleteProduct = async () => {
-        let _products = products.filter((val) => val.CatId !== product.CatId);
+        let _products = products.filter((val) => val.ID !== product.ID);
         setProducts(_products);
         setDeleteProductDialog(false);
-        await Axios.delete("/Cat/DelCategory", {
+        await Axios.delete("/EMP/delete", {
             headers: {
             },
             data: {
-                Cat_id: parseInt(product.CatId)
+                id: parseInt(product.ID)
             }
         }).then((res) => {
             console.log(res)
@@ -466,17 +467,27 @@ const Employee = () => {
                             </div>
                         </div>
                     </Dialog>
-                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Employee Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
-                            <label htmlFor="name">Category</label>
-                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
-                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
+                            <label htmlFor="name">Employee name</label>
+                            <InputText id="Name" value={product.Name} onChange={(e) => onInputChange(e, 'Name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Name })} />
+                            {submitted && !product.Name && <small className="p-invalid">Employee is required.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="description">Category Description</label>
-                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
-                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
+                            <label htmlFor="Email">Employee email</label>
+                            <InputText id="Email" value={product.Email} onChange={(e) => onInputChange(e, 'Email')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Email })} />
+                            {submitted && !product.Email && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="Password">Employee password</label>
+                            <InputText id="pwd" value={product.pwd} onChange={(e) => onInputChange(e, 'pwd')} required autoFocus  className={classNames({ 'p-invalid': submitted && !product.pwd })} />
+                            {submitted && !product.pwd && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">Employee Address</label>
+                            <InputTextarea id="Address" value={product.Address} onChange={(e) => onInputChange(e, 'Address')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
+                            {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
                         {/* <div className="field">
@@ -502,16 +513,22 @@ const Employee = () => {
                         </div> */}
 
                         <div className="formgrid grid">
-                            <div className="field col">
-                                <label htmlFor="price">Dealer ID</label>
-                                <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
+                            {/* <div className="field col">
+                                <label htmlFor="price">Price</label>
+                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
                             </div>
-                            {/*  <div className="field col">
+                            <div className="field col">
                                 <label htmlFor="quantity">Quantity</label>
                                 <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
                             </div> */}
+                            <div className="field col">
+                                <label htmlFor="quantity">Select Designation</label>
+                                <InputTextarea id="/." value={product.Designation} disabled required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
+                                 {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
+                            </div>
                         </div>
                     </Dialog>
+
 
                     <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                         <div className="flex align-items-center justify-content-center">
