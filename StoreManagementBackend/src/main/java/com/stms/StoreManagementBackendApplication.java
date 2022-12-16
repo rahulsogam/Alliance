@@ -11,3 +11,4 @@ public class StoreManagementBackendApplication {
 		System.out.println("HELLO WORLD");
 	}
 }
+
