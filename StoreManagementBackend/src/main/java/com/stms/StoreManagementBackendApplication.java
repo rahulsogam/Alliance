@@ -10,6 +10,5 @@ public class StoreManagementBackendApplication {
 		SpringApplication.run(StoreManagementBackendApplication.class, args);
 		System.out.println("HELLO WORLD");
 	}
-
 }
  
