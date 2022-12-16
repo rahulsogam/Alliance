@@ -19,10 +19,11 @@ const Category = () => {
         category: null,
         description: '',
         dealer: null,
-        };
+    };
 
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
+    const [editDialog, setEditDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
@@ -37,10 +38,45 @@ const Category = () => {
 
 
     useEffect(() => {
-        const productService = new ProductService();
-        productService.getProducts().then((data) => setProducts(data));
+        setProducts([
+            {
+                "CategoryDealer": "1001",
+                "CatId": "101",
+                "CatName": "Dairy_Products"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1014",
+                "CatName": "Meat"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1015",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1016",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1017",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1018",
+                "CatName": "Stationary"
+            }
+        ])
+        Axios.get("/Cat/All").then((res) => {
+            console.log(res.data.data.Categories)
+            setProducts(res.data.data.Categories)
+
+        })
         Axios.get("/Dealer/All").then((res) => {
-            console.log(res.data.data.Dealers);
+
             setDropdownValues(res.data.data.Dealers)
         }).catch((err) => {
             console.log(err)
@@ -62,6 +98,7 @@ const Category = () => {
     const hideDialog = () => {
         setSubmitted(false);
         setProductDialog(false);
+        setEditDialog(false)
     };
 
     const hideDeleteProductDialog = () => {
@@ -97,33 +134,37 @@ const Category = () => {
     //     }
     // };
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
+        setSubmitted(true);
+        let _products = [...products];
+        let _product = { ...product, CategoryDealer: "1022" };
+        _products = [..._products, _product]
+        setProducts(_products);
+        setProduct(emptyProduct);
+        await Axios.post("/Cat/AddCat", { Cat_name: product.CatName, Dealer_id: parseInt(dropdownValue.code) }).then((res) => {
+            console.log(res);
+            setProductDialog(false);
+        })
+    };
+
+    const saveEdit = async() => {
         setSubmitted(true);
 
-        if (product.name.trim()) {
-            let _products = [...products];
-            let _product = { ...product };
-            if (product.id) {
-                const index = findIndexById(product.id);
-
-                _products[index] = _product;
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                _product.id = createId();
-                _product.image = 'product-placeholder.svg';
-                _products.push(_product);
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-
-            setProducts(_products);
-            setProductDialog(false);
-            setProduct(emptyProduct);
-        }
+        let _products = [...products];
+        let _product = { ...product};
+        const index = findIndexById(product.CatId);
+        _products[index] = _product;
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
+        setProducts(_products);
+        setProduct(emptyProduct);
+        await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
+            setEditDialog(false);
+        })
     };
 
     const editProduct = (product) => {
         setProduct({ ...product });
-        setProductDialog(true);
+        setEditDialog(true);
     };
 
     const confirmDeleteProduct = (product) => {
@@ -131,12 +172,21 @@ const Category = () => {
         setDeleteProductDialog(true);
     };
 
-    const deleteProduct = () => {
-        let _products = products.filter((val) => val.id !== product.id);
+    const deleteProduct = async () => {
+        let _products = products.filter((val) => val.CatId !== product.CatId);
         setProducts(_products);
         setDeleteProductDialog(false);
-        setProduct(emptyProduct);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        await Axios.delete("/Cat/DelCategory", {
+            headers: {
+            },
+            data: {
+                Cat_id: parseInt(product.CatId)
+            }
+        }).then((res) => {
+            console.log(res)
+            setProduct(emptyProduct);
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        })
     };
 
     const findIndexById = (id) => {
@@ -219,10 +269,11 @@ const Category = () => {
     };
 
     const codeBodyTemplate = (rowData) => {
+
         return (
             <>
                 <span className="p-column-title">Code</span>
-                {rowData.code}
+                {rowData.CatId}
             </>
         );
     };
@@ -231,7 +282,7 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Name</span>
-                {rowData.name}
+                {rowData.CatName}
             </>
         );
     };
@@ -249,7 +300,7 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.price)}
+                {formatCurrency(rowData.CategoryDealer)}
             </>
         );
     };
@@ -292,7 +343,7 @@ const Category = () => {
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Manage Products</h5>
+            <h5 className="m-0">Manage Categories</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -306,6 +357,12 @@ const Category = () => {
             <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
         </>
     );
+    const eitDialogFooter = (
+        <>
+            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+            <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveEdit} />
+        </>
+    )
     const deleteProductDialogFooter = (
         <>
             <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteProductDialog} />
@@ -343,27 +400,22 @@ const Category = () => {
                         header={header}
                         responsiveLayout="scroll"
                     >
-                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                        <Column field="code" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="name" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column header="Image" body={imageBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="price" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-                        <Column field="category" header="Category" sortable body={categoryBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CatId" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CatName" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CategoryDealer" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
                             <label htmlFor="name">Category</label>
-                            <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
+                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
                             {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
                         </div>
                         <div className="field">
                             <label htmlFor="description">Category Description</label>
-                            <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20}  />
+                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
@@ -403,6 +455,52 @@ const Category = () => {
                                 <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
                                 {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
                             </div>
+                        </div>
+                    </Dialog>
+                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
+                        {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
+                        <div className="field">
+                            <label htmlFor="name">Category</label>
+                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
+                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">Category Description</label>
+                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
+                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
+                        </div>
+
+                        {/* <div className="field">
+                            <label className="mb-3">Category</label>
+                            <div className="formgrid grid">
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
+                                    <label htmlFor="category1">Accessories</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
+                                    <label htmlFor="category2">Clothing</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
+                                    <label htmlFor="category3">Electronics</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
+                                    <label htmlFor="category4">Fitness</label>
+                                </div>
+                            </div>
+                        </div> */}
+
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <label htmlFor="price">Dealer ID</label>
+                                <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
+                            </div>
+                            {/*  <div className="field col">
+                                <label htmlFor="quantity">Quantity</label>
+                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
+                            </div> */}
                         </div>
                     </Dialog>
 
