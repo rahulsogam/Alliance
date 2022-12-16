@@ -13,7 +13,7 @@ import com.stms.config.JSONResponse;
 import com.stms.service.Productservice;
 
 @RestController
-@RequestMapping
+@RequestMapping("/Product")
 @CrossOrigin
 public class ProductController {
 	@Autowired
