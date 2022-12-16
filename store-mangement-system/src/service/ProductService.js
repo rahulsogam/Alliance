@@ -9,6 +9,10 @@ export default class ProductService {
         return axios.get('assets/demo/data/products.json').then((res) => res.data.data);
     }
 
+    getCategory(){
+        return axios.get('Cat/All').then((res) => res.data.data);
+    }
+
     getProductsMixed() {
         return axios.get('assets/demo/data/products-mixed.json').then((res) => res.data.data);
     }

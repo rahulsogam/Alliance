@@ -25,6 +25,7 @@ const AppWrapper = () => {
                     <Route path="/error" element={<Error />} />
                     <Route path="/notfound" element={<NotFound />} />
                     <Route path="/access" element={<Access />} />
+                    <Route path="*" element={<App />} />
                     <Route
                         path="*"
                         element={<Navigate to="/login" replace />}
