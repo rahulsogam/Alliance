@@ -5,7 +5,8 @@ const menu = [
         items: [
             { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
             { label: 'Category', icon: 'pi pi-fw pi-list', to: '/category' },
-            { label: 'Employee', icon: 'pi pi-fw pi-users', to: '/employee' }
+            { label: 'Employee', icon: 'pi pi-fw pi-users', to: '/employee' },
+            { label: 'Customer', icon: 'pi pi-fw pi-user-plus', to: '/customer' }
         ]
     },
     { separator: true },
