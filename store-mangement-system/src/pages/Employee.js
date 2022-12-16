@@ -67,6 +67,20 @@ const Employee = () => {
                 "Name": "Jay"
             }
         ])
+        setDropdownValues([
+            {
+                "code": "Manager",
+                "name": "Manager"
+            },
+            {
+                "code": "Sales Assistant",
+                "name": "Sales Assistant"
+            },
+            {
+                "code": "Tesco",
+                "name": "Tesco"
+            }
+        ])
         Axios.get("/EMP/All").then((res) => {
             console.log(res)
             setProducts(res.data.data.Employees)
@@ -133,7 +147,7 @@ const Employee = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         let _products = [...products];
-        let _product = { ...product,Salary:"20000",Designation:dropdownValue};
+        let _product = { ...product,Salary:"20000",Designation:dropdownValue.name};
         _products = [..._products, _product]
         setProducts(_products);
         setProduct(emptyProduct);
@@ -150,6 +164,7 @@ const Employee = () => {
         let _products = [...products];
         let _product = { ...product};
         const index = findIndexById(product.ID);
+        console.log(index)
         _products[index] = _product;
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Employee Updated', life: 3000 });
         setProducts(_products);
@@ -190,7 +205,7 @@ const Employee = () => {
     const findIndexById = (id) => {
         let index = -1;
         for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+            if (products[i].ID === id) {
                 index = i;
                 break;
             }
