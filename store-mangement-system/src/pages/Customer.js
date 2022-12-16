@@ -41,21 +41,21 @@ const Customer = () => {
                 "Custname": "digivijay",
                 "Custemail": "abc@abc",
                 "Orderid": "888",
-                "Custno": "777"
+                "Custno": "77123123127"
             },
             {
                 "Custid": "550",
                 "Custname": "febin",
                 "Custemail": "abd@abc",
                 "Orderid": "889",
-                "Custno": "778"
+                "Custno": "77123123138"
             },
             {
                 "Custid": "551",
                 "Custname": "navin",
                 "Custemail": "ddd@abc",
                 "Orderid": "880",
-                "Custno": "779"
+                "Custno": "712334345679"
             }
         ])
          Axios.get("/Cust/All").then((res) => {
@@ -408,9 +408,9 @@ const Customer = () => {
                     >
                         <Column field="Custid" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="Custname" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="Custemail" header="Price" body={emailBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-                        <Column field="Orderid" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-                        <Column field="Custno" header="Price" body={custnoBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Custemail" header="EMail" body={emailBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Orderid" header="Order Id" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Custno" header="Cust no" body={custnoBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
                
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
