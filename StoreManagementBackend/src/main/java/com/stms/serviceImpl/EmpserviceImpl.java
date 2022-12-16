@@ -211,6 +211,30 @@ public class EmpserviceImpl implements Empservice{
 		}
 		return ans;
 	}
+
+
+	@Override
+	public JSONObject getAllDesignation() {
+		data = new JSONArray() ;
+		ans = new JSONObject();
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.GET_DESIGNATION);
+			rs=preparedStatement.executeQuery();
+			while(rs.next()) {
+				JSONObject result= new JSONObject();
+				result.put("name", rs.getString("employeeDesignation"));
+				result.put("code", rs.getString("employeeDesignation"));
+				data.put(result);
+				}
+			ans.put("Designation", data);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		return ans;
+	
+	}
 	
 
 }

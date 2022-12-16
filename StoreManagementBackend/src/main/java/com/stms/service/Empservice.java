@@ -6,6 +6,7 @@ public interface Empservice {
 
 	JSONObject getAllEmp();
 	JSONObject getEmpSal();
+	JSONObject getAllDesignation();
 	Boolean getLogin(Object id, Object pass);
 	JSONObject dashboardAccess(Object id);
 	JSONObject addEmployee(Object name, Object address, Object email, Object password,Object designation);

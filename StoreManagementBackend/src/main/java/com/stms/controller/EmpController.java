@@ -37,6 +37,14 @@ public class EmpController {
 		 
 	}
 	
+	@GetMapping(path = "/Designation")
+	ResponseEntity<Response> getDesignation(){
+		System.out.println("COntroller"+" "+empservice.getAllEmp());
+		JSONObject data = empservice.getAllDesignation();
+		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
+		 
+	}
+	
 //	@GetMapping(path = "/EMPSal")
 //	ResponseEntity<Response> getEmpSal(){
 //		System.out.println("COntroller"+" "+empservice.getEmpSal());

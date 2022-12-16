@@ -12,7 +12,7 @@ public class SqlQuery {
 	public static final String GET_ALL_ORDER="select * from orders";
 	public static final String GET_ORDER_BY_ID = "select * from orders where order_id=?";
 	public static final String DEL_EMP="Delete from employee where employeeId=?";
-
+	public static final String GET_DESIGNATION="select distinct employeeDesignation from Employee";
 //Category Queries
 	public static final String GET_ALL_CAT="select * from Category";
 	public static final String GET_CAT_BY_ID="select * from Category where category_Id=?";
@@ -26,4 +26,7 @@ public class SqlQuery {
 	
 //Product Queries
 	public static final String GET_ALL_PRODUCTS="select p.*,c.category_Name from Category c ,Product p where c.category_Id= p.category_Id";
+	public static final String DEL_PRODUCTS_BY_ID="Delete from Product where product_Id=?";
+	public static final String UPDATE_PRODUCT="UPDATE Product SET product_Qty = ? WHERE product_Id=?  ";
+
 }
