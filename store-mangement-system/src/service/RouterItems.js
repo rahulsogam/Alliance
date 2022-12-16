@@ -28,12 +28,16 @@ import Help from '../pages/Help';
 import EmptyPage from '../pages/EmptyPage';
 import InvalidStateDemo from '../components/InvalidStateDemo';
 import TimelineDemo from '../pages/TimelineDemo';
+import Employee from '../pages/Employee';
+import Customer from '../pages/Customer';
 
 const RoutesItems = ({colorScheme,location,logoUrl}) => {
     return (
         <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/formlayout" element={<FormLayoutDemo />} />
+            <Route path="/employee" element={<Employee/>} />
+            <Route path="/customer" element={<Customer/>} />
             <Route path="/input" element={<InputDemo />} />
             <Route path="/floatlabel" element={<FloatLabelDemo />} />
             <Route path="/invalidstate" element={<InvalidStateDemo />} />

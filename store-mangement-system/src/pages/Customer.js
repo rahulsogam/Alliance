@@ -4,17 +4,14 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { FileUpload } from 'primereact/fileupload';
 import { Rating } from 'primereact/rating';
-import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import ProductService from '../service/ProductService';
 import { Dropdown } from 'primereact/dropdown';
 import { Axios } from '../AxiosConfig';
 
-const Category = () => {
+const Customer = () => {
     let emptyProduct = {
         category: null,
         description: '',
@@ -40,41 +37,32 @@ const Category = () => {
     useEffect(() => {
         setProducts([
             {
-                "CategoryDealer": "1001",
-                "CatId": "101",
-                "CatName": "Dairy_Products"
+                "Custid": "555",
+                "Custname": "digivijay",
+                "Custemail": "abc@abc",
+                "Orderid": "888",
+                "Custno": "777"
             },
             {
-                "CategoryDealer": "1001",
-                "CatId": "1014",
-                "CatName": "Meat"
+                "Custid": "550",
+                "Custname": "febin",
+                "Custemail": "abd@abc",
+                "Orderid": "889",
+                "Custno": "778"
             },
             {
-                "CategoryDealer": "1001",
-                "CatId": "1015",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1016",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1017",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1018",
-                "CatName": "Stationary"
+                "Custid": "551",
+                "Custname": "navin",
+                "Custemail": "ddd@abc",
+                "Orderid": "880",
+                "Custno": "779"
             }
         ])
-        Axios.get("/Cat/All").then((res) => {
-            console.log(res.data.data.Categories)
-            setProducts(res.data.data.Categories)
+         Axios.get("/Cust/All").then((res) => {
+             console.log(res.data.data.Customer)
+             setProducts(res.data.data.Customer)
 
-        })
+         })
         Axios.get("/Dealer/All").then((res) => {
 
             setDropdownValues(res.data.data.Dealers)
@@ -248,32 +236,32 @@ const Category = () => {
     //     setProduct(_product);
     // };
 
-    const leftToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                <div className="my-2">
-                    <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                    <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
-                </div>
-            </React.Fragment>
-        );
-    };
+    // const leftToolbarTemplate = () => {
+    //     return (
+    //         <React.Fragment>
+    //             <div className="my-2">
+    //                 <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
+    //                 <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+    //             </div>
+    //         </React.Fragment>
+    //     );
+    // };
 
-    const rightToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-            </React.Fragment>
-        );
-    };
+    // const rightToolbarTemplate = () => {
+    //     return (
+    //         <React.Fragment>
+    //             <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" />
+    //             <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
+    //         </React.Fragment>
+    //     );
+    // };
 
     const codeBodyTemplate = (rowData) => {
 
         return (
             <>
                 <span className="p-column-title">Code</span>
-                {rowData.CatId}
+                {rowData.Custid}
             </>
         );
     };
@@ -282,7 +270,7 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Name</span>
-                {rowData.CatName}
+                {rowData.Custname}
             </>
         );
     };
@@ -300,10 +288,28 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.CategoryDealer)}
+                {formatCurrency(rowData.Orderid)}
             </>
         );
     };
+
+    const emailBodyTemplate = (rowData) => {
+        return (
+            <>
+                <span className="p-column-title">Price</span>
+                {formatCurrency(rowData.Custemail)}
+            </>
+        );
+    };
+    const custnoBodyTemplate = (rowData) => {
+        return (
+            <>
+                <span className="p-column-title">Price</span>
+                {formatCurrency(rowData.Custno)}
+            </>
+        );
+    };
+    
 
     const categoryBodyTemplate = (rowData) => {
         return (
@@ -343,7 +349,7 @@ const Category = () => {
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Manage Categories</h5>
+            <h5 className="m-0">Customer detail</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -381,7 +387,7 @@ const Category = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                    <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                {/* <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar> */}
 
                     <DataTable
                         ref={dt}
@@ -400,9 +406,12 @@ const Category = () => {
                         header={header}
                         responsiveLayout="scroll"
                     >
-                        <Column field="CatId" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="CatName" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="CategoryDealer" header="Dealer Code" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Custid" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="Custname" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="Custemail" header="Price" body={emailBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Orderid" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Custno" header="Price" body={custnoBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+               
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
@@ -527,4 +536,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default Customer;

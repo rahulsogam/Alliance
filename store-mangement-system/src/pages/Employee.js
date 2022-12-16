@@ -14,7 +14,7 @@ import ProductService from '../service/ProductService';
 import { Dropdown } from 'primereact/dropdown';
 import { Axios } from '../AxiosConfig';
 
-const Category = () => {
+const Employee = () => {
     let emptyProduct = {
         category: null,
         description: '',
@@ -40,48 +40,44 @@ const Category = () => {
     useEffect(() => {
         setProducts([
             {
-                "CategoryDealer": "1001",
-                "CatId": "101",
-                "CatName": "Dairy_Products"
+                "Designation": "Sales Assistant",
+                "Salary": "20000",
+                "Email": "sarveshbhosale111@gmail.com",
+                "Address": "Hardwike",
+                "ID": "1",
+                "pwd": "11111",
+                "Name": "Sarvesh"
             },
             {
-                "CategoryDealer": "1001",
-                "CatId": "1014",
-                "CatName": "Meat"
+                "Designation": "Manager",
+                "Salary": "30000",
+                "Email": "sogam.rahul08@gmail.com",
+                "Address": "Hardwike",
+                "ID": "2",
+                "pwd": "11111",
+                "Name": "Rahul"
             },
             {
-                "CategoryDealer": "1001",
-                "CatId": "1015",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1016",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1017",
-                "CatName": "Stationary"
-            },
-            {
-                "CategoryDealer": "1001",
-                "CatId": "1018",
-                "CatName": "Stationary"
+                "Designation": "Sales Assistant",
+                "Salary": "20000",
+                "Email": "jaysolu27@gmail.com",
+                "Address": "Hardwike",
+                "ID": "4",
+                "pwd": "11111",
+                "Name": "Jay"
             }
         ])
-        Axios.get("/Cat/All").then((res) => {
-            console.log(res.data.data.Categories)
-            setProducts(res.data.data.Categories)
+        Axios.get("/EMP/All").then((res) => {
+            console.log(res)
+            setProducts(res.data.data.Employees)
 
         })
-        Axios.get("/Dealer/All").then((res) => {
+        Axios.get("/EMP/Designation").then((res) => {
 
-            setDropdownValues(res.data.data.Dealers)
+            setDropdownValues(res.data.data.Designation)
         }).catch((err) => {
             console.log(err)
         })
-        console.log(dropdownValues);
         // eslint-disable-next-line
     }, []);
 
@@ -137,11 +133,12 @@ const Category = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         let _products = [...products];
-        let _product = { ...product, CatID: "1022" };
+        let _product = { ...product,Salary:"20000",Designation:dropdownValue};
         _products = [..._products, _product]
         setProducts(_products);
         setProduct(emptyProduct);
-        await Axios.post("/Cat/AddCat", { Cat_name: product.CatName, Dealer_id: parseInt(dropdownValue.code) }).then((res) => {
+        setProductDialog(false);
+        await Axios.post("/EMP/create", { name: product.Name, address: product.Address,email:product.Email,designation:dropdownValue.name,password:product.pwd }).then((res) => {
             console.log(res);
             setProductDialog(false);
         })
@@ -152,13 +149,14 @@ const Category = () => {
 
         let _products = [...products];
         let _product = { ...product};
-        const index = findIndexById(product.CatId);
+        const index = findIndexById(product.ID);
         _products[index] = _product;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Employee Updated', life: 3000 });
         setProducts(_products);
         setProduct(emptyProduct);
-        await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
-            setEditDialog(false);
+        setEditDialog(false);
+        await Axios.post("/EMP/update", { id: product.ID, name:product.Name, address:product.Address, email:product.Email}).then((res) => {
+             console.log(res);
         })
     };
 
@@ -173,14 +171,14 @@ const Category = () => {
     };
 
     const deleteProduct = async () => {
-        let _products = products.filter((val) => val.CatId !== product.CatId);
+        let _products = products.filter((val) => val.ID !== product.ID);
         setProducts(_products);
         setDeleteProductDialog(false);
-        await Axios.delete("/Cat/DelCategory", {
+        await Axios.delete("/EMP/delete", {
             headers: {
             },
             data: {
-                Cat_id: parseInt(product.CatId)
+                id: parseInt(product.ID)
             }
         }).then((res) => {
             console.log(res)
@@ -272,8 +270,8 @@ const Category = () => {
 
         return (
             <>
-                <span className="p-column-title">Code</span>
-                {rowData.CatId}
+                <span className="p-column-title">Name</span>
+                {rowData.Name}
             </>
         );
     };
@@ -281,8 +279,8 @@ const Category = () => {
     const nameBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Name</span>
-                {rowData.CatName}
+                <span className="p-column-title">Salary</span>
+                {rowData.Salary}
             </>
         );
     };
@@ -299,8 +297,8 @@ const Category = () => {
     const priceBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.CategoryDealer)}
+                <span className="p-column-title">Email</span>
+                {formatCurrency(rowData.Email)}
             </>
         );
     };
@@ -308,8 +306,8 @@ const Category = () => {
     const categoryBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Category</span>
-                {rowData.category}
+                <span className="p-column-title">Designation</span>
+                {rowData.Designation}
             </>
         );
     };
@@ -317,8 +315,8 @@ const Category = () => {
     const ratingBodyTemplate = (rowData) => {
         return (
             <>
-                <span className="p-column-title">Reviews</span>
-                <Rating value={rowData.rating} readOnly cancel={false} />
+                <span className="p-column-title">Address</span>
+                {rowData.Address}
             </>
         );
     };
@@ -343,7 +341,7 @@ const Category = () => {
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Manage Categories</h5>
+            <h5 className="m-0">Manage Employees</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -400,23 +398,35 @@ const Category = () => {
                         header={header}
                         responsiveLayout="scroll"
                     >
-                        <Column field="CatId" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="CatName" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="CategoryDealer" header="Dealer Code" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Name" header="Name" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="Salary" header="Salary" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="Email" header="Email" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Designation" header="Designation" body={categoryBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+                        <Column field="Address" header="Address" body={ratingBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Employee Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
-                            <label htmlFor="name">Category</label>
-                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
-                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
+                            <label htmlFor="name">Employee name</label>
+                            <InputText id="Name" value={product.Name} onChange={(e) => onInputChange(e, 'Name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Name })} />
+                            {submitted && !product.Name && <small className="p-invalid">Employee is required.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="description">Category Description</label>
-                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
-                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
+                            <label htmlFor="Email">Employee email</label>
+                            <InputText id="Email" value={product.Email} onChange={(e) => onInputChange(e, 'Email')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Email })} />
+                            {submitted && !product.Email && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="Password">Employee password</label>
+                            <InputText id="pwd" value={product.pwd} onChange={(e) => onInputChange(e, 'pwd')} required autoFocus  className={classNames({ 'p-invalid': submitted && !product.pwd })} />
+                            {submitted && !product.pwd && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">Employee Address</label>
+                            <InputTextarea id="Address" value={product.Address} onChange={(e) => onInputChange(e, 'Address')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
+                            {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
                         {/* <div className="field">
@@ -451,23 +461,33 @@ const Category = () => {
                                 <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
                             </div> */}
                             <div className="field col">
-                                <label htmlFor="quantity">Select Dealer</label>
+                                <label htmlFor="quantity">Select Designation</label>
                                 <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
                                 {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
                             </div>
                         </div>
                     </Dialog>
-                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Employee Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
-                            <label htmlFor="name">Category</label>
-                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
-                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
+                            <label htmlFor="name">Employee name</label>
+                            <InputText id="Name" value={product.Name} onChange={(e) => onInputChange(e, 'Name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Name })} />
+                            {submitted && !product.Name && <small className="p-invalid">Employee is required.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="description">Category Description</label>
-                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
-                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
+                            <label htmlFor="Email">Employee email</label>
+                            <InputText id="Email" value={product.Email} onChange={(e) => onInputChange(e, 'Email')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Email })} />
+                            {submitted && !product.Email && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="Password">Employee password</label>
+                            <InputText id="pwd" value={product.pwd} onChange={(e) => onInputChange(e, 'pwd')} required autoFocus  className={classNames({ 'p-invalid': submitted && !product.pwd })} />
+                            {submitted && !product.pwd && <small className="p-invalid">Employee is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">Employee Address</label>
+                            <InputTextarea id="Address" value={product.Address} onChange={(e) => onInputChange(e, 'Address')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
+                            {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
                         {/* <div className="field">
@@ -493,16 +513,22 @@ const Category = () => {
                         </div> */}
 
                         <div className="formgrid grid">
-                            <div className="field col">
-                                <label htmlFor="price">Dealer ID</label>
-                                <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
+                            {/* <div className="field col">
+                                <label htmlFor="price">Price</label>
+                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
                             </div>
-                            {/*  <div className="field col">
+                            <div className="field col">
                                 <label htmlFor="quantity">Quantity</label>
                                 <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
                             </div> */}
+                            <div className="field col">
+                                <label htmlFor="quantity">Select Designation</label>
+                                <InputTextarea id="/." value={product.Designation} disabled required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
+                                 {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
+                            </div>
                         </div>
                     </Dialog>
+
 
                     <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                         <div className="flex align-items-center justify-content-center">
@@ -527,4 +553,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default Employee;
