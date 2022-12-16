@@ -10,7 +10,7 @@ public class SqlQuery {
 	public static final String GET_ALL_ORDER="select * from orders";
 
 
-	public static final String GET_EMP_EMAIL = "select * from Employee em where em.employeeEmail='sarveshbhosale111@gmail.com'";
+	public static final String GET_EMP_EMAIL = "select * from Employee em where em.employeeEmail=?";
 	public static final String GET_ORDER_BY_ID = "select * from orders where order_id=?";
 
 
