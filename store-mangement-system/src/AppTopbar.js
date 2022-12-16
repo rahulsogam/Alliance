@@ -3,11 +3,12 @@ import { classNames } from 'primereact/utils';
 import { Link } from 'react-router-dom';
 import AppBreadcrumb from './AppBreadcrumb';
 import AppMenu from './AppMenu';
+import { useSelector } from 'react-redux';
 
 const AppTopbar = (props) => {
     const notificationsItemClassName = classNames('notifications-item', { 'active-menuitem': props.topbarNotificationMenuActive });
     const profileItemClassName = classNames('profile-item', { 'active-menuitem fadeInDown': props.topbarUserMenuActive });
-
+    const user = useSelector((state) => state.login.user)
     return (
         <div className="layout-topbar">
             <div className="topbar-left">
@@ -109,8 +110,7 @@ const AppTopbar = (props) => {
 
                     <li className={profileItemClassName}>
                         <button type="button" className="p-link" onClick={props.onTopbarUserMenu}>
-                            <img src="assets/demo/images/avatar/profile.jpg" alt="diamond-layout" className="profile-image" />
-                            <span className="profile-name">Amelia Stone</span>
+                            <span className="profile-name">{user.Name}</span>
                         </button>
                         <ul className="profile-menu fade-in-up">
                             <li>

@@ -155,7 +155,7 @@ const Employee = () => {
         setProducts(_products);
         setProduct(emptyProduct);
         setEditDialog(false);
-        await Axios.post("/EMP/update", { id: product.ID, name:product.Name, address:product.Address, email:product.Email}).then((res) => {
+        await Axios.patch("/EMP/update", { id: product.ID, name:product.Name, address:product.Address, email:product.Email, password:product.pwd}).then((res) => {
              console.log(res);
         })
     };
