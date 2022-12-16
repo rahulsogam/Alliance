@@ -3,6 +3,7 @@ package com.stms.serviceImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -41,16 +42,20 @@ public class EmpserviceImpl implements Empservice{
 		ans = new JSONObject();
 		try {
 			connection= dataSource.getConnection();
-			preparedStatement= connection.prepareStatement(SqlQuery.GET_ALL_EMP);
+			preparedStatement= connection.prepareStatement(SqlQuery.GET_ALL_EMP_DTLS);
 			rs=preparedStatement.executeQuery();
 			while(rs.next()) {
 				JSONObject result= new JSONObject();
-				result.put("Name",rs.getString("employee_name"));
-				result.put("ID", rs.getString("Employee_id"));
-				result.put("Designation",rs.getString("Designation"));
+				result.put("Name",rs.getString("employeeName"));
+				result.put("ID", rs.getString("EmployeeId"));
+				result.put("Address", rs.getString("employeeAddress"));
+				result.put("Email", rs.getString("employeeEmail"));
+				result.put("pwd", rs.getString("employeePassword"));
+				result.put("Designation", rs.getString("employeeDesignation"));
+				result.put("Salary", rs.getString("Total_salary"));
 				data.put(result);
 				}
-			ans.put("arrayOfEmployees", data);
+			ans.put("Employees", data);
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -127,7 +132,7 @@ public class EmpserviceImpl implements Empservice{
 
 
 	@Override
-	public JSONObject addEmployee(Object name, Object address, Object email, Object password) {
+	public JSONObject addEmployee(Object name, Object address, Object email, Object password,Object designation) {
 		JSONObject result= new JSONObject();
 		try {
 			connection= dataSource.getConnection();
@@ -136,6 +141,7 @@ public class EmpserviceImpl implements Empservice{
 			preparedStatement.setString(2, address.toString());
 			preparedStatement.setString(3, email.toString());
 			preparedStatement.setString(4, password.toString());
+			preparedStatement.setString(5, designation.toString());
 			int i=preparedStatement.executeUpdate();
 			System.out.println(i);
 			if(i==1) {
@@ -182,9 +188,28 @@ public class EmpserviceImpl implements Empservice{
 
 
 	@Override
-	public JSONObject deleteEmployee(Object name, Object address, Object email, Object password) {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONObject deleteEmployee(Object empId) {
+		data = new JSONArray() ;
+		ans = new JSONObject();
+		System.out.println(empId);
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.DEL_EMP);
+			preparedStatement.setInt(1, (Integer)empId);
+			int j=preparedStatement.executeUpdate();
+			if(j!= 0) {
+				ans.put("msg", "Eemployee Data Deleted Successfully..!!");
+				ans.append("status", "success");
+			}
+			else {
+				ans.put("msg", "Unsucessfull");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ans.put("status", "Exception");
+			ans.put("msg", e.toString());
+		}
+		return ans;
 	}
 	
 
