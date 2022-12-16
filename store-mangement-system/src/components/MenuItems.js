@@ -50,6 +50,7 @@ const menu = [
         icon: 'pi pi-fw pi-pencil',
         items: [
             { label: 'Crud', icon: 'pi pi-fw pi-pencil', to: '/crud' },
+            { label: 'Category', icon: 'pi pi-fw pi-list', to: '/category' },
             { label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', to: '/calendar' },
             { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/timeline' },
             { label: 'Landing', icon: 'pi pi-fw pi-user-plus', url: 'assets/pages/landing.html', target: '_blank' },
