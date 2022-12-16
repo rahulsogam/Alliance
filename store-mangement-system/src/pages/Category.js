@@ -137,7 +137,7 @@ const Category = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         let _products = [...products];
-        let _product = { ...product, CategoryDealer: "1022" };
+        let _product = { ...product, CatID: "1022" };
         _products = [..._products, _product]
         setProducts(_products);
         setProduct(emptyProduct);
