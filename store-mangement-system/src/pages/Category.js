@@ -37,10 +37,45 @@ const Category = () => {
 
 
     useEffect(() => {
-        const productService = new ProductService();
-        productService.getProducts().then((data) => setProducts(data));
+        setProducts([
+            {
+                "CategoryDealer": "1001",
+                "CatId": "101",
+                "CatName": "Dairy_Products"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1014",
+                "CatName": "Meat"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1015",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1016",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1017",
+                "CatName": "Stationary"
+            },
+            {
+                "CategoryDealer": "1001",
+                "CatId": "1018",
+                "CatName": "Stationary"
+            }
+        ])
+        Axios.get("/Cat/All").then((res)=>{
+            console.log(res.data.data.Categories)
+            setProducts(res.data.data.Categories)
+            
+        })
         Axios.get("/Dealer/All").then((res) => {
-            console.log(res.data.data.Dealers);
+           
             setDropdownValues(res.data.data.Dealers)
         }).catch((err) => {
             console.log(err)
@@ -219,19 +254,21 @@ const Category = () => {
     };
 
     const codeBodyTemplate = (rowData) => {
+
         return (
             <>
                 <span className="p-column-title">Code</span>
-                {rowData.code}
+                {rowData.CatId}
             </>
         );
     };
 
     const nameBodyTemplate = (rowData) => {
+        console.log(rowData)
         return (
             <>
                 <span className="p-column-title">Name</span>
-                {rowData.name}
+                {rowData.CatName}
             </>
         );
     };
@@ -249,7 +286,7 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.price)}
+                {formatCurrency(rowData.CategoryDealer)}
             </>
         );
     };
@@ -292,7 +329,7 @@ const Category = () => {
 
     const header = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 className="m-0">Manage Products</h5>
+            <h5 className="m-0">Manage Categories</h5>
             <span className="block mt-2 md:mt-0 p-input-icon-left">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -343,14 +380,9 @@ const Category = () => {
                         header={header}
                         responsiveLayout="scroll"
                     >
-                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                        <Column field="code" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="name" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column header="Image" body={imageBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="price" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-                        <Column field="category" header="Category" sortable body={categoryBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CatId" header="Code" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CatName" header="Name" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
+                        <Column field="CategoryDealer" header="Price" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 

@@ -13,7 +13,7 @@ public class SqlQuery {
 	public static final String GET_ORDER_BY_ID = "select * from orders where order_id=?";
 
 
-//	Category Queries
+//Category Queries
 	public static final String GET_ALL_CAT="select * from Category";
 	public static final String GET_CAT_BY_ID="select * from Category where category_Id=?";
 	public static final String DEL_CAT_BY_ID="Delete from Category where category_Id=?";
