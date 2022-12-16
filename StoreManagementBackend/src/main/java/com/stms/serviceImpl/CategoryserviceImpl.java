@@ -76,9 +76,10 @@ public class CategoryserviceImpl implements Categoryservice {
 				cat.put("msg", "Category insertion successfull...");
 				
 			}
-			else
+			else {
 				cat.put("status", "Error");
 				cat.put("msg", "Insertion failed..");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

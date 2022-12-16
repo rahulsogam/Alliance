@@ -2,7 +2,11 @@ const menu = [
     {
         label: 'Favorites',
         icon: 'pi pi-fw pi-home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+        items: [
+            { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
+            { label: 'Category', icon: 'pi pi-fw pi-list', to: '/category' },
+            { label: 'Employee', icon: 'pi pi-fw pi-users', to: '/employee' }
+        ]
     },
     { separator: true },
     {

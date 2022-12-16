@@ -21,18 +21,21 @@ import Documentation from '../components/Documentation';
 import BlocksDemo from '../components/BlocksDemo';
 import IconsDemo from '../utilities/IconsDemo';
 import CrudDemo from '../pages/CrudDemo';
+import Category from '../pages/Category';
 import CalendarDemo from '../pages/CalendarDemo';
 import Invoice from '../pages/Invoice';
 import Help from '../pages/Help';
 import EmptyPage from '../pages/EmptyPage';
 import InvalidStateDemo from '../components/InvalidStateDemo';
 import TimelineDemo from '../pages/TimelineDemo';
+import Employee from '../pages/Employee';
 
 const RoutesItems = ({colorScheme,location,logoUrl}) => {
     return (
         <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/formlayout" element={<FormLayoutDemo />} />
+            <Route path="/employee" element={<Employee/>} />
             <Route path="/input" element={<InputDemo />} />
             <Route path="/floatlabel" element={<FloatLabelDemo />} />
             <Route path="/invalidstate" element={<InvalidStateDemo />} />
@@ -50,6 +53,7 @@ const RoutesItems = ({colorScheme,location,logoUrl}) => {
             <Route path="/misc" element={<MiscDemo />} />
             <Route path="/icons" element={<IconsDemo />} />
             <Route path="/crud" element={<CrudDemo />} />
+            <Route path="/category" element={<Category/>} />
             <Route path="/blocks" element={<BlocksDemo />} />
             <Route path="/calendar" element={<CalendarDemo />} />
             <Route path="/timeline" element={<TimelineDemo />} />
