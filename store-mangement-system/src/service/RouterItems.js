@@ -30,6 +30,7 @@ import InvalidStateDemo from '../components/InvalidStateDemo';
 import TimelineDemo from '../pages/TimelineDemo';
 import Employee from '../pages/Employee';
 import Customer from '../pages/Customer';
+import Product from '../pages/Product';
 
 const RoutesItems = ({colorScheme,location,logoUrl}) => {
     return (
@@ -37,6 +38,7 @@ const RoutesItems = ({colorScheme,location,logoUrl}) => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/formlayout" element={<FormLayoutDemo />} />
             <Route path="/employee" element={<Employee/>} />
+            <Route path="/products" element={<Product/>} />
             <Route path="/customer" element={<Customer/>} />
             <Route path="/input" element={<InputDemo />} />
             <Route path="/floatlabel" element={<FloatLabelDemo />} />
