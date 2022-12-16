@@ -95,10 +95,6 @@ const Employee = () => {
         // eslint-disable-next-line
     }, []);
 
-    const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    };
-
     const openNew = () => {
         setProduct(emptyProduct);
         setSubmitted(false);
@@ -313,7 +309,7 @@ const Employee = () => {
         return (
             <>
                 <span className="p-column-title">Email</span>
-                {formatCurrency(rowData.Email)}
+                {rowData.Email}
             </>
         );
     };
