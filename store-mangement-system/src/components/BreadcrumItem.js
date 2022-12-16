@@ -23,6 +23,8 @@ const breadcrumb = [
     { path: '/blocks', parent: 'PrimeBlocks', label: 'Blocks' },
     { path: '/crud', parent: 'Utilities', label: 'Crud' },
     { path: '/category', parent: 'Utilities', label: 'Category' },
+    { path: '/customer', parent: 'Utilities', label: 'Customer' },
+    { path: '/products', parent: 'Utilities', label: 'Product' },
     { path: '/employee', parent: 'Utilities', label: 'Employee' },
     { path: '/calendar', parent: 'PrimeBlocks', label: 'Calendar' },
     { path: '/timeline', parent: 'Pages', label: 'Timeline' },

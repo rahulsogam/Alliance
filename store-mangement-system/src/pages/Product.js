@@ -35,29 +35,48 @@ const Product = () => {
 
 
     useEffect(() => {
-        // setProducts([
-        //     {
-        //         "Custid": "555",
-        //         "Custname": "digivijay",
-        //         "Custemail": "abc@abc",
-        //         "Orderid": "888",
-        //         "Custno": "777"
-        //     },
-        //     {
-        //         "Custid": "550",
-        //         "Custname": "febin",
-        //         "Custemail": "abd@abc",
-        //         "Orderid": "889",
-        //         "Custno": "778"
-        //     },
-        //     {
-        //         "Custid": "551",
-        //         "Custname": "navin",
-        //         "Custemail": "ddd@abc",
-        //         "Orderid": "880",
-        //         "Custno": "779"
-        //     }
-        // ])
+         setProducts([
+            {
+                "category_Id": "1014",
+                "product_Description": "Red Meat",
+                "product_id": "1",
+                "product_Qty": "100",
+                "product_Name": "Ham",
+                "category_Name": "Meat & Beef"
+            },
+            {
+                "category_Id": "1014",
+                "product_Description": "Red Meat",
+                "product_id": "2",
+                "product_Qty": "160",
+                "product_Name": "Turkey",
+                "category_Name": "Meat & Beef"
+            },
+            {
+                "category_Id": "1014",
+                "product_Description": "Red Meat",
+                "product_id": "3",
+                "product_Qty": "160",
+                "product_Name": "Turkey",
+                "category_Name": "Meat & Beef"
+            },
+            {
+                "category_Id": "101",
+                "product_Description": "White Paneer",
+                "product_id": "4",
+                "product_Qty": "260",
+                "product_Name": "Panner",
+                "category_Name": "Dairy_Products"
+            },
+            {
+                "category_Id": "101",
+                "product_Description": "Falvoured Yogurts",
+                "product_id": "5",
+                "product_Qty": "210",
+                "product_Name": "Yogurt",
+                "category_Name": "Dairy_Products"
+            }
+        ])
          Axios.get("/Product/GetProducts").then((res) => {
              console.log(res.data.data.Products)
              setProducts(res.data.data.Products)
