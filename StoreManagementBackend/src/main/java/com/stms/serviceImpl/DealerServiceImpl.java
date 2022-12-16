@@ -41,8 +41,8 @@ public class DealerServiceImpl implements Dealerservice  {
 			while(rs.next()) {
 				cat.put("msg", "Success");
 				JSONObject result= new JSONObject();
-				result.put("DealerId",rs.getString("dealer_id"));
-				result.put("DealerName", rs.getString("dealer_name"));
+				result.put("code",rs.getString("dealer_id"));
+				result.put("name", rs.getString("dealer_name"));
 				result.put("DealerContact",rs.getString("dealer_contact"));
 				result.put("DealerAddress",rs.getString("dealer_address"));
 				result.put("DealerEmail",rs.getString("dealer_email"));

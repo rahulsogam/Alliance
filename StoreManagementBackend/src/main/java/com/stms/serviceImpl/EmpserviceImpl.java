@@ -90,7 +90,6 @@ public class EmpserviceImpl implements Empservice{
 			preparedStatement= connection.prepareStatement(SqlQuery.GET_EMP_EMAIL);
 			preparedStatement.setString(1, id.toString());
 			rs=preparedStatement.executeQuery();
-			
 			if(rs.next()) {
 				System.out.println(rs.getString("employeePassword")+""+pass);
 				if(pass.equals(rs.getString("employeePassword"))) {
