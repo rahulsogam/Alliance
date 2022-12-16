@@ -1,5 +1,6 @@
 Front-end technologies - Reactjs,HTML,CSS,Bootstrap
-Backend Technologies - JAVA,SpringBoot,SQL.
+Backend Technologies - JAVA,SpringBoot,MsSQL.
+Azure setup.
 
 Hosted Server Link:management-server.database.windows.net
 AdminID:10616280@mydbs.ie 
@@ -40,3 +41,16 @@ CREATE TABLE STMS.dbo.dealers(
 	dealer_email nvarchar(50),
 	dealer_no int
 )
+
+
+Overview about Store Management system.:
+The STMS provides an illustration of the product inventory in a store, which includes both dealer-supplied items as well as products from a variety of categories.
+The shop's personnel essentially handle management of this.
+All features, including add, update, remove, and modification, may be used in this management system.
+
+
+CONTRIBUTION:
+As equal Contribution was assigned to each member in the group, SARVESH NITIN BHOSALE handled database setup on Azure, Using Java and Spring Boot Framework rest APIs of Employee and its Authentication was done.
+Secondly JAY HITENDRA SOLANKI handled for firing the data in database in MS Sql server, Using java and Spring Boot Framework rest APIs of Customers and Orders was initiated and for presentation, ppt was made by Jay.
+Consequently RAHUL KISHOR SOGAM handled his work using Java and Spring Boot Framework rest APIs of category of stocks, product and of Dealers.
+Once our project was near to complete we did testing together and did required updates accordingly.
