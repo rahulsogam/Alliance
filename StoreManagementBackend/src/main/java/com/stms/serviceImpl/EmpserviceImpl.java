@@ -124,7 +124,68 @@ public class EmpserviceImpl implements Empservice{
 			}
 		return result;
 	}
+
+
+	@Override
+	public JSONObject addEmployee(Object name, Object address, Object email, Object password) {
+		JSONObject result= new JSONObject();
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.ADD_EMP);
+			preparedStatement.setString(1, name.toString());
+			preparedStatement.setString(2, address.toString());
+			preparedStatement.setString(3, email.toString());
+			preparedStatement.setString(4, password.toString());
+			int i=preparedStatement.executeUpdate();
+			System.out.println(i);
+			if(i==1) {
+				result.put("status", "success");
+			}
+			else {
+				result.put("status", "Error");
+			}
+		}
+			catch(Exception e) {
+				e.printStackTrace();
+				result.put("status", "Exception");
+			}
+		
+		return result;
+	}
 	
+	public JSONObject updateEmployee(Object id,Object name, Object address, Object email, Object password) {
+		JSONObject result= new JSONObject();
+		try {
+			connection= dataSource.getConnection();
+			preparedStatement= connection.prepareStatement(SqlQuery.UPDATE_EMP);
+			preparedStatement.setString(1, name.toString());
+			preparedStatement.setString(2, address.toString());
+			preparedStatement.setString(3, email.toString());
+			preparedStatement.setString(4, password.toString());
+			preparedStatement.setString(5, id.toString());
+			int i=preparedStatement.executeUpdate();
+			System.out.println(i);
+			if(i==1) {
+				result.put("status", "success");
+			}
+			else {
+				result.put("status", "Error");
+			}
+		}
+			catch(Exception e) {
+				e.printStackTrace();
+				result.put("status", "Exception");
+			}
+		
+		return result;
+	}
+
+
+	@Override
+	public JSONObject deleteEmployee(Object name, Object address, Object email, Object password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
