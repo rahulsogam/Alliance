@@ -37,13 +37,13 @@ public class EmpController {
 		 
 	}
 	
-	@GetMapping(path = "/EMPSal")
-	ResponseEntity<Response> getEmpSal(){
-		System.out.println("COntroller"+" "+empservice.getEmpSal());
-		JSONObject data = empservice.getEmpSal();
-		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
-		 
-	}
+//	@GetMapping(path = "/EMPSal")
+//	ResponseEntity<Response> getEmpSal(){
+//		System.out.println("COntroller"+" "+empservice.getEmpSal());
+//		JSONObject data = empservice.getEmpSal();
+//		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
+//		 
+//	}
 	
 	@PostMapping(path = "/login")
 	ResponseEntity<Response> login(@RequestBody Map<String, Object> payload){
@@ -60,10 +60,12 @@ public class EmpController {
 		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
 
 	}
+	
+	
 	@PostMapping(path = "/create")
 	ResponseEntity<Response> addEmployee(@RequestBody Map<String, Object> payload){
 		JSONObject data = new JSONObject();
-	    data = empservice.addEmployee(payload.get("name"),payload.get("address"),payload.get("email"),payload.get("password"));
+	    data = empservice.addEmployee(payload.get("name"),payload.get("address"),payload.get("email"),payload.get("password"),payload.get("designation"));
 		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
 
 	}
@@ -77,7 +79,7 @@ public class EmpController {
 	@DeleteMapping(path = "/delete")
 	ResponseEntity<Response> deleteEmployee(@RequestBody Map<String, Object> payload){
 		JSONObject data = new JSONObject();
-	    data = empservice.deleteEmployee(payload.get("name"),payload.get("address"),payload.get("email"),payload.get("password"));
+	    data = empservice.deleteEmployee(payload.get("id"));
 		return new ResponseEntity<Response>(new Response("success",data.toMap(), null), HttpStatus.OK);
 	}
 }
