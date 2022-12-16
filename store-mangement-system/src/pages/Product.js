@@ -446,7 +446,7 @@ const Product = () => {
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
                             <label htmlFor="name">Category</label>
@@ -497,15 +497,15 @@ const Product = () => {
                             </div>
                         </div>
                     </Dialog>
-                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Category Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
+                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
-                            <label htmlFor="name">Category</label>
+                            <label htmlFor="name">Product</label>
                             <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
                             {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="description">Category Description</label>
+                            <label htmlFor="description">Product Description</label>
                             <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>
