@@ -1,6 +1,7 @@
 package com.stms.serviceImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stms.config.SqlQuery;
-import com.stms.service.Customerservice;
+import com.stms.service.Ordersservice;
 
 
 @Service
 @Transactional
-public class CustserviceImpl implements Customerservice {
+public class OrdersserviceImpl implements Ordersservice {
 	
 	@Autowired
 	DataSource dataSource;
@@ -27,7 +28,7 @@ public class CustserviceImpl implements Customerservice {
 	PreparedStatement preparedStatement=null;
 	ResultSet rs;
 	JSONArray data ;
-	JSONObject cust;
+	JSONObject order;
 	
 	Connection connection;
 	
@@ -35,78 +36,86 @@ public class CustserviceImpl implements Customerservice {
 	
 	
 	@Override
-	public JSONObject getAllCust() {
+	public JSONObject getAllOrder() {
 		
 		data = new JSONArray();
-		cust = new JSONObject();
+		order = new JSONObject();
 		try {
 			connection = dataSource.getConnection();
-			preparedStatement= connection.prepareStatement(SqlQuery.GET_ALL_CUST);
+			preparedStatement= connection.prepareStatement(SqlQuery.GET_ALL_ORDER);
 			rs=preparedStatement.executeQuery();
 			while (rs.next()) {
 				JSONObject result = new JSONObject();
-				result.put("Custid", rs.getString("cust_id"));
-				result.put("Custname",rs.getString("cust_name"));
-				result.put("Custemail",rs.getString("cust_email"));
-				result.put("Custno", rs.getString("cust_no"));
-				result.put("Orderid",rs.getString("order_id"));
+				result.put("Orderid", rs.getString("order_id"));
+				result.put("Custid",rs.getString("cust_id"));
+				result.put("Date",rs.getString("date"));
+				result.put("Totalcost", rs.getString("total_cost"));
+				result.put("Paymentmethod",rs.getString("payment_method"));
 				data.put(result);
 			}
-			cust.put("Customer",data);		
+			order.put("Order",data);		
 			
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(cust);
-		return cust;
+		System.out.println(order);
+		return order;
 	}
 	
 	
 	
 	@Override
-    public JSONObject getCustById(int id) {
+    public JSONObject getOrderById(int id) {
         data = new JSONArray() ;
-        cust = new JSONObject();
+        order = new JSONObject();
         System.out.println(id);
         try {
             connection= dataSource.getConnection();
-            preparedStatement= connection.prepareStatement(SqlQuery.GET_CUST_BY_ID);
+            preparedStatement= connection.prepareStatement(SqlQuery.GET_ORDER_BY_ID);
             preparedStatement.setInt(1, id);
            
             rs=preparedStatement.executeQuery();
             if(rs.next()) {
                 JSONObject result= new JSONObject();
-                cust.put("msg", "Data Present");
-                result.put("CustId",rs.getString("cust_id"));
-                result.put("CustName", rs.getString("cust_name"));
-                result.put("CustEmail", rs.getString("cust_email"));
-                result.put("CustNo", rs.getString("cust_no"));
+                order.put("msg", "Data Present");
                 result.put("OrderId",rs.getString("order_id"));
+                result.put("CustId", rs.getString("cust_id"));
+                result.put("Date", rs.getDate("date"));
+                result.put("TotalCost", rs.getString("total_cost"));
+                result.put("PaymentMethod",rs.getString("payment_method"));
                 data.put(result);
             }
             else {
-                cust.put("msg", "Data not found");
+                order.put("msg", "Data not found");
             }
 
-            cust.put("Customers",data);
+            order.put("Orders",data);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            cust.put("status", "Exception");
-            cust.put("msg", e.toString());
+            order.put("status", "Exception");
+            order.put("msg", e.toString());
         }
-        return cust;
+        return order;
 	}
 
 
 
 	@Override
-	public JSONObject addCustomer(String name, String email, Integer id, Integer no, Integer orderid) {
-		System.out.println(name+email+id+no+orderid);
+	public JSONObject addOrders(Integer id, Integer custid, java.util.Date date, Integer totalcost,
+			String paymentmethod) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	
+
+
+	
 	
 	
 
