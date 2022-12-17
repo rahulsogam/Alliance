@@ -55,7 +55,7 @@ export const Login = () => {
                         <h1>Account</h1>
                     </div>
                     <div className="image-footer">
-                        <p>Powered by Aliance please give us 1:1 marks for this project</p>
+                        <p>Powered by Aliance</p>
                         <div className="icons">
                             <i className="pi pi-github"></i>
                             <i className="pi pi-twitter"></i>

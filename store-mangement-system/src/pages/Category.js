@@ -70,6 +70,50 @@ const Category = () => {
                 "CatName": "Stationary"
             }
         ])
+        setDropdownValue([
+            {
+                "DealerEmail": "aba",
+                "code": "1001",
+                "DealerAddress": "xyz",
+                "name": "Tesco",
+                "DealerContact": "123123       "
+            },
+            {
+                "DealerEmail": "asdasdsa",
+                "code": "1002",
+                "DealerAddress": "ababav",
+                "name": "Aldi",
+                "DealerContact": "12371273621  "
+            },
+            {
+                "DealerEmail": "asdasdsa",
+                "code": "1003",
+                "DealerAddress": "ababav",
+                "name": "Lidl",
+                "DealerContact": "12371273621  "
+            },
+            {
+                "DealerEmail": "asdasdsa",
+                "code": "1004",
+                "DealerAddress": "ababav",
+                "name": "EutoGiant",
+                "DealerContact": "12371273621  "
+            },
+            {
+                "DealerEmail": "asdasdsa",
+                "code": "1005",
+                "DealerAddress": "ababav",
+                "name": "Centra",
+                "DealerContact": "12371273621  "
+            },
+            {
+                "DealerEmail": "asdasdsa",
+                "code": "1006",
+                "DealerAddress": "ababav",
+                "name": "Spar",
+                "DealerContact": "12371273621  "
+            }
+        ])
         Axios.get("/Cat/All").then((res) => {
             console.log(res.data.data.Categories)
             setProducts(res.data.data.Categories)
@@ -85,9 +129,6 @@ const Category = () => {
         // eslint-disable-next-line
     }, []);
 
-    const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    };
 
     const openNew = () => {
         setProduct(emptyProduct);
@@ -137,13 +178,14 @@ const Category = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         let _products = [...products];
-        let _product = { ...product, CatID: "1022" };
-        _products = [..._products, _product]
+        let _product = { ...product, CatId: "1029", CategoryDealer:"1008" };
+        _products = [..._products, _product];
+        console.log(_product)
         setProducts(_products);
         setProduct(emptyProduct);
+        setProductDialog(false);
         await Axios.post("/Cat/AddCat", { Cat_name: product.CatName, Dealer_id: parseInt(dropdownValue.code) }).then((res) => {
             console.log(res);
-            setProductDialog(false);
         })
         
     };
@@ -167,8 +209,8 @@ const Category = () => {
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
         setProducts(_products);
         setProduct(emptyProduct);
+        setEditDialog(false);
         await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
-            setEditDialog(false);
         })
         
     };
@@ -204,7 +246,7 @@ const Category = () => {
     const findIndexById = (id) => {
         let index = -1;
         for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+            if (products[i].CatId === id) {
                 index = i;
                 break;
             }
@@ -312,7 +354,7 @@ const Category = () => {
         return (
             <>
                 <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.CategoryDealer)}
+                {rowData.CategoryDealer}
             </>
         );
     };
