@@ -51,6 +51,7 @@ public class CustserviceImpl implements Customerservice {
 				result.put("Custno", rs.getString("cust_no"));
 				result.put("Orderid",rs.getString("order_id"));
 				data.put(result);
+				dataSource.getConnection().close();
 			}
 			cust.put("Customer",data);		
 			
@@ -85,6 +86,7 @@ public class CustserviceImpl implements Customerservice {
                 result.put("CustNo", rs.getString("cust_no"));
                 result.put("OrderId",rs.getString("order_id"));
                 data.put(result);
+                dataSource.getConnection().close();
             }
             else {
                 cust.put("msg", "Data not found");

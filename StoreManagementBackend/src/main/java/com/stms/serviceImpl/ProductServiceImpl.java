@@ -47,6 +47,7 @@ public class ProductServiceImpl implements Productservice {
 				result.put("category_Id",rs.getString("category_Id"));
 				result.put("category_Name",rs.getString("category_Name"));
 				data.put(result);
+				dataSource.getConnection().close();
 				}
 			prod.put("Products", data);
 			}
@@ -82,6 +83,7 @@ public class ProductServiceImpl implements Productservice {
 				prod.put("status", "Error");
 				prod.put("msg", "Insertion failed..");
 			}
+			dataSource.getConnection().close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,11 +110,13 @@ public class ProductServiceImpl implements Productservice {
 			else {
 				prod.put("msg", "Unsucessfull");
 			}
+			dataSource.getConnection().close();
 		} catch (SQLException e) { 
 			e.printStackTrace();
 			prod.put("status", "Exception");
 			prod.put("msg", e.toString());
 		}
+		
 		return prod;
 
 	}
@@ -135,6 +139,8 @@ public class ProductServiceImpl implements Productservice {
 			else {
 				prod.put("msg", "Unsucessfull");
 			}
+			System.out.println(prod);
+			dataSource.getConnection().close();
 		} catch (SQLException e) { 
 			e.printStackTrace();
 			prod.put("status", "Exception");

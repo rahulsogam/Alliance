@@ -56,6 +56,7 @@ public class EmpserviceImpl implements Empservice{
 				data.put(result);
 				}
 			ans.put("Employees", data);
+			dataSource.getConnection().close();
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -80,6 +81,7 @@ public class EmpserviceImpl implements Empservice{
 				data.put(result);
 				}
 			ans.put("EmpSal", data);
+			dataSource.getConnection().close();
 			}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -101,6 +103,7 @@ public class EmpserviceImpl implements Empservice{
 				return true;
 			}
 			}
+			dataSource.getConnection().close();
 		}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -123,6 +126,7 @@ public class EmpserviceImpl implements Empservice{
 				result.put("Address",rs.getString("employeeAddress"));
 				result.put("Email",rs.getString("employeeEmail"));	
 			}
+			dataSource.getConnection().close();
 		}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -150,6 +154,7 @@ public class EmpserviceImpl implements Empservice{
 			else {
 				result.put("status", "Error");
 			}
+			dataSource.getConnection().close();
 		}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -177,6 +182,7 @@ public class EmpserviceImpl implements Empservice{
 			else {
 				result.put("status", "Error");
 			}
+			dataSource.getConnection().close();
 		}
 			catch(Exception e) {
 				e.printStackTrace();
@@ -204,6 +210,7 @@ public class EmpserviceImpl implements Empservice{
 			else {
 				ans.put("msg", "Unsucessfull");
 			}
+			dataSource.getConnection().close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			ans.put("status", "Exception");
@@ -228,6 +235,7 @@ public class EmpserviceImpl implements Empservice{
 				data.put(result);
 				}
 			ans.put("Designation", data);
+			dataSource.getConnection().close();
 			}
 			catch(Exception e) {
 				e.printStackTrace();

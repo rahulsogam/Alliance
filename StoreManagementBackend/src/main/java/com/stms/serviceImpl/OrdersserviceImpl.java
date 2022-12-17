@@ -52,6 +52,7 @@ public class OrdersserviceImpl implements Ordersservice {
 				result.put("Totalcost", rs.getString("total_cost"));
 				result.put("Paymentmethod",rs.getString("payment_method"));
 				data.put(result);
+				dataSource.getConnection().close();
 			}
 			order.put("Order",data);		
 			
@@ -86,6 +87,7 @@ public class OrdersserviceImpl implements Ordersservice {
                 result.put("TotalCost", rs.getString("total_cost"));
                 result.put("PaymentMethod",rs.getString("payment_method"));
                 data.put(result);
+                dataSource.getConnection().close();
             }
             else {
                 order.put("msg", "Data not found");

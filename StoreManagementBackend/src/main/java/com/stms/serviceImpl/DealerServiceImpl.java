@@ -83,6 +83,7 @@ public class DealerServiceImpl implements Dealerservice  {
 				cat.put("status", "Error");
 				cat.put("msg", "Insertion failed..");
 			}
+			dataSource.getConnection().close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
