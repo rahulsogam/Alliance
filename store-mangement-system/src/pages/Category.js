@@ -145,7 +145,17 @@ const Category = () => {
             console.log(res);
             setProductDialog(false);
         })
+        
     };
+
+    function getALL()
+    {
+        Axios.get("/Cat/All").then((res) => {
+        console.log(res.data.data.Categories)
+        setProducts(res.data.data.Categories)
+
+        })
+    }
 
     const saveEdit = async() => {
         setSubmitted(true);
@@ -160,6 +170,7 @@ const Category = () => {
         await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
             setEditDialog(false);
         })
+        
     };
 
     const editProduct = (product) => {
@@ -170,6 +181,7 @@ const Category = () => {
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
+        getALL();
     };
 
     const deleteProduct = async () => {
@@ -414,7 +426,7 @@ const Category = () => {
                             {submitted && !product.name && <small className="p-invalid">product is required.</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="description">Product Description</label>
+                            <label htmlFor="description">Category Description</label>
                             <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>

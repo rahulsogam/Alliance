@@ -71,7 +71,7 @@ const Employee = () => {
             console.log(res)
             setProducts(res.data.data.Employees)
 
-        })
+        });
         Axios.get("/EMP/Designation").then((res) => {
 
             setDropdownValues(res.data.data.Designation)

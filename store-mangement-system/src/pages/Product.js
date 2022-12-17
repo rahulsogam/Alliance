@@ -13,11 +13,17 @@ import { Axios } from '../AxiosConfig';
 
 const Product = () => {
     let emptyProduct = {
-        category: null,
-        description: '',
-        dealer: null,
+        product_id:0,
+        update_Qty:0,
+        product_Name: null,
+        product_Description:null,
+        product_Qty:null,
+        category_Name:'',
+        category_Id: null,
     };
-
+    var stock = "INSTOCK";
+    var lowstock = "LOWSTOCK";
+    var outstock = "OUTOFSTOCK";
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [editDialog, setEditDialog] = useState(false);
@@ -35,7 +41,7 @@ const Product = () => {
 
 
     useEffect(() => {
-         setProducts([
+        setProducts([
             {
                 "category_Id": "1014",
                 "product_Description": "Red Meat",
@@ -77,17 +83,23 @@ const Product = () => {
                 "category_Name": "Dairy_Products"
             }
         ])
-         Axios.get("/Product/GetProducts").then((res) => {
-             console.log(res.data.data.Products)
-             setProducts(res.data.data.Products)
+        Axios.get("/Product/GetProducts").then((res) => {
+            console.log(res.data.data.Products)
+            setProducts(res.data.data.Products)
 
-         })
+        })
         Axios.get("/Dealer/All").then((res) => {
-
             setDropdownValues(res.data.data.Dealers)
         }).catch((err) => {
             console.log(err)
         })
+
+        // Axios.get("/Dealer/All").then((res) => {
+
+        //     setDropdownValues(res.data.data.Dealers)
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
         console.log(dropdownValues);
         // eslint-disable-next-line
     }, []);
@@ -154,22 +166,23 @@ const Product = () => {
         })
     };
 
-    const saveEdit = async() => {
+    const saveEdit = async () => {
         setSubmitted(true);
 
         let _products = [...products];
-        let _product = { ...product};
+        let _product = { ...product };
         const index = findIndexById(product.CatId);
         _products[index] = _product;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Quantity Updated', life: 3000 });
         setProducts(_products);
         setProduct(emptyProduct);
-        await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
+        await Axios.post("Product/UpdateProductQty", { ProductId: parseInt(product.product_id), ProductQty:parseInt(product.update_Qty) }).then((res) => {
             setEditDialog(false);
         })
     };
 
     const editProduct = (product) => {
+        console.log(product);
         setProduct({ ...product });
         setEditDialog(true);
     };
@@ -338,7 +351,7 @@ const Product = () => {
             </>
         );
     };
-    
+
 
     const categoryBodyTemplate = (rowData) => {
         return (
@@ -359,12 +372,31 @@ const Product = () => {
     };
 
     const statusBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Status</span>
-                <span className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}>{rowData.inventoryStatus}</span>
-            </>
-        );
+        if(rowData.product_Qty ==0) {
+            return (
+                <>
+                    <span className="p-column-title">Status</span>
+                    <span className={`product-badge status-${outstock.toLowerCase()}`}>{outstock}</span>
+                </>
+            );
+        }
+        else if (rowData.product_Qty <= 160) {
+            return (
+                <>
+                    <span className="p-column-title">Status</span>
+                    <span className={`product-badge status-${lowstock.toLowerCase()}`}>{lowstock}</span>
+                </>
+            );
+        } else {
+            return (
+
+                <>
+                    <span className="p-column-title">Status</span>
+                    <span className={`product-badge status-${stock.toLowerCase()}`}>{stock}</span>
+                </>
+            );
+        }
+
     };
 
     const actionBodyTemplate = (rowData) => {
@@ -416,7 +448,7 @@ const Product = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                {/* <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar> */}
+                    {/* <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar> */}
 
                     <DataTable
                         ref={dt}
@@ -439,69 +471,19 @@ const Product = () => {
                         <Column field="product_Name" header="Product Name" sortable body={productnameTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="category_Id" header="Category ID" sortable body={codeBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="category_Name" header="Category Name" body={custnoBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-               
+
                         <Column field="product_Description" header="Product Description" sortable body={nameBodyTemplate} headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="product_Qty" header="Product Quantity" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
-                        
+                        <Column field="product_Qty" header="Product Status" body={statusBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
+
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable>
 
                     <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                         {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
-                            <label htmlFor="name">Category</label>
-                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
-                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
-                        </div>
-                        <div className="field">
-                            <label htmlFor="description">Category Description</label>
-                            <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
-                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
-                        </div>
-
-                        {/* <div className="field">
-                            <label className="mb-3">Category</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
-                                    <label htmlFor="category1">Accessories</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
-                                    <label htmlFor="category2">Clothing</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
-                                    <label htmlFor="category3">Electronics</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
-                                    <label htmlFor="category4">Fitness</label>
-                                </div>
-                            </div>
-                        </div> */}
-
-                        <div className="formgrid grid">
-                            {/* <div className="field col">
-                                <label htmlFor="price">Price</label>
-                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                            </div>
-                            <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                            </div> */}
-                            <div className="field col">
-                                <label htmlFor="quantity">Select Dealer</label>
-                                <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
-                                {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
-                            </div>
-                        </div>
-                    </Dialog>
-                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
-                        {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
-                        <div className="field">
                             <label htmlFor="name">Product</label>
-                            <InputText id="name" value={product.CatName} onChange={(e) => onInputChange(e, 'CatName')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
+                            <InputText id="name" value={product.product_Name} onChange={(e) => onInputChange(e, 'product_Name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.product_Name })} />
                             {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
                         </div>
                         <div className="field">
@@ -509,6 +491,57 @@ const Product = () => {
                             <InputTextarea id="description" value={product.CatId} onChange={(e) => onInputChange(e, 'discription')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>
+                        <div className="formgrid grid">
+                            <div className="field col">
+                                <label htmlFor="price">Select Category</label>
+                                <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
+                            </div>
+                        </div>
+
+                        {/* <div className="field">
+                            <label className="mb-3">Category</label>
+                            <div className="formgrid grid">
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
+                                    <label htmlFor="category1">Accessories</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
+                                    <label htmlFor="category2">Clothing</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
+                                    <label htmlFor="category3">Electronics</label>
+                                </div>
+                                <div className="field-radiobutton col-6">
+                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
+                                    <label htmlFor="category4">Fitness</label>
+                                </div>
+                            </div>
+                        </div> */}
+
+                        <div className="field col">
+                            <label htmlFor="quantity">Select Dealer</label>
+                            <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
+                            {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+                        </div>
+                    </Dialog>
+                    <Dialog visible={editDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={eitDialogFooter} onHide={hideDialog}>
+                        {product.image && <img src={`assets/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
+                        <div className="field" hidden>
+                            <label htmlFor="name">ProductId</label>
+                            <InputText id="name" value={product.product_id}  onChange={(e) => onInputChange(e, 'product_id')} readOnly required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="name">Product</label>
+                            <InputText id="name" value={product.product_Name} onChange={(e) => onInputChange(e, 'CatName')} readOnly required autoFocus className={classNames({ 'p-invalid': submitted && !product.CatName })} />
+                            {submitted && !product.name && <small className="p-invalid">Category is required.</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">Available Quantity</label>
+                            <InputTextarea id="description" value={product.product_Qty} onChange={(e) => onInputChange(e, 'discription')} readOnly required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} rows={3} cols={20} />
+                            {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
+                        </div>
 
                         {/* <div className="field">
                             <label className="mb-3">Category</label>
@@ -534,8 +567,8 @@ const Product = () => {
 
                         <div className="formgrid grid">
                             <div className="field col">
-                                <label htmlFor="price">Dealer ID</label>
-                                <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
+                                <label htmlFor="price">Update Quantity</label>
+                                <InputText id="price" value={null}  onChange={(e) => onInputChange(e, 'update_Qty')}locale="en-US"  />
                             </div>
                             {/*  <div className="field col">
                                 <label htmlFor="quantity">Quantity</label>
