@@ -47,7 +47,7 @@ public class OrdersserviceImpl implements Ordersservice {
 			while (rs.next()) {
 				JSONObject result = new JSONObject();
 				result.put("Orderid", rs.getString("order_id"));
-				result.put("Custid",rs.getString("cust_id"));
+				result.put("cust_name",rs.getString("cust_name"));
 				result.put("Date",rs.getString("date"));
 				result.put("Totalcost", rs.getString("total_cost"));
 				result.put("Paymentmethod",rs.getString("payment_method"));
