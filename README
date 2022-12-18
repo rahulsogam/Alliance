@@ -50,7 +50,9 @@ All features, including add, update, remove, and modification, may be used in th
 
 
 CONTRIBUTION:
-As equal Contribution was assigned to each member in the group, SARVESH NITIN BHOSALE handled database setup on Azure, Using Java and Spring Boot Framework rest APIs of Employee and its Authentication was done.
+As equal Contribution was assigned to each member in the group, SARVESH NITIN BHOSALE handled deploying the database on Azure, Did react and redux setup 
+and integrated template in the particular react application along with that Authentication and Employee modules were also handled by sarvesh where everything 
+from creating rest API's for all the operations in this two modules to integrating and displaying them on frontend was handled by him.
 Secondly JAY HITENDRA SOLANKI handled for firing the data in database in MS Sql server, Using java and Spring Boot Framework rest APIs of Customers and Orders was initiated and for presentation, ppt was made by Jay.
 Consequently RAHUL KISHOR SOGAM handled his work using Java and Spring Boot Framework rest APIs of category of stocks, product and of Dealers.
 Once our project was near to complete we did testing together and did required updates accordingly.
