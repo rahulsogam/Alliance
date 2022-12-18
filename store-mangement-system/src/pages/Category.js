@@ -206,11 +206,12 @@ const Category = () => {
         let _product = { ...product};
         const index = findIndexById(product.CatId);
         _products[index] = _product;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
-        setProducts(_products);
-        setProduct(emptyProduct);
-        setEditDialog(false);
+
         await Axios.post("/Cat/UpdateCategory", { Cat_name: product.CatName, Cat_id:parseInt(product.CatId)}).then((res) => {
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Updated', life: 3000 });
+            setProducts(_products);
+            setProduct(emptyProduct);
+            setEditDialog(false);
         })
         
     };
@@ -239,7 +240,7 @@ const Category = () => {
         }).then((res) => {
             console.log(res)
             setProduct(emptyProduct);
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Category Deleted', life: 3000 });
         })
     };
 
