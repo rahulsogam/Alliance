@@ -5,12 +5,10 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
-import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import ProductService from '../service/ProductService';
 import { Dropdown } from 'primereact/dropdown';
 import { Axios } from '../AxiosConfig';
 
@@ -38,57 +36,12 @@ const Employee = () => {
 
 
     useEffect(() => {
-        setProducts([
-            {
-                "Designation": "Sales Assistant",
-                "Salary": "20000",
-                "Email": "sarveshbhosale111@gmail.com",
-                "Address": "Hardwike",
-                "ID": "1",
-                "pwd": "11111",
-                "Name": "Sarvesh"
-            },
-            {
-                "Designation": "Manager",
-                "Salary": "30000",
-                "Email": "sogam.rahul08@gmail.com",
-                "Address": "Hardwike",
-                "ID": "2",
-                "pwd": "11111",
-                "Name": "Rahul"
-            },
-            {
-                "Designation": "Sales Assistant",
-                "Salary": "20000",
-                "Email": "jaysolu27@gmail.com",
-                "Address": "Hardwike",
-                "ID": "4",
-                "pwd": "11111",
-                "Name": "Jay"
-            }
-        ])
-        setDropdownValues([
-            {
-                "code": "Manager",
-                "name": "Manager"
-            },
-            {
-                "code": "Sales Assistant",
-                "name": "Sales Assistant"
-            },
-            {
-                "code": "Tesco",
-                "name": "Tesco"
-            }
-        ])
+        Axios.get("/EMP/Designation").then((res) => {
+            setDropdownValues(res.data.data.Designation)
+        })
         Axios.get("/EMP/All").then((res) => {
             console.log(res)
             setProducts(res.data.data.Employees)
-
-        });
-        Axios.get("/EMP/Designation").then((res) => {
-
-            setDropdownValues(res.data.data.Designation)
         }).catch((err) => {
             console.log(err)
         })
@@ -114,31 +67,6 @@ const Employee = () => {
     const hideDeleteProductsDialog = () => {
         setDeleteProductsDialog(false);
     };
-
-
-    // const saveCategory = () => {
-    //     setSubmitted(true);
-
-    //     if (product.name.trim()) {
-    //         let _products = [...products];
-    //         let _product = { ...product };
-    //         if (product.id) {
-    //             const index = findIndexById(product.id);
-
-    //             _products[index] = _product;
-    //             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-    //         } else {
-    //             _product.id = createId();
-    //             _product.image = 'product-placeholder.svg';
-    //             _products.push(_product);
-    //             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    //         }
-
-    //         setProducts(_products);
-    //         setProductDialog(false);
-    //         setProduct(emptyProduct);
-    //     }
-    // };
 
     const saveProduct = async () => {
         setSubmitted(true);
@@ -210,15 +138,6 @@ const Employee = () => {
         return index;
     };
 
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    };
-
     const exportCSV = () => {
         dt.current.exportCSV();
     };
@@ -235,12 +154,6 @@ const Employee = () => {
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     };
 
-    // const onCategoryChange = (e) => {
-    //     let _product = { ...product };
-    //     _product['category'] = e.value;
-    //     setProduct(_product);
-    // };
-
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
         let _product = { ...product };
@@ -249,13 +162,6 @@ const Employee = () => {
         setProduct(_product);
     };
 
-    // const onInputNumberChange = (e, name) => {
-    //     const val = e.value || 0;
-    //     let _product = { ...product };
-    //     _product[`${name}`] = val;
-
-    //     setProduct(_product);
-    // };
 
     const leftToolbarTemplate = () => {
         return (
@@ -296,15 +202,6 @@ const Employee = () => {
         );
     };
 
-    const imageBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Image</span>
-                <img src={`assets/demo/images/product/${rowData.image}`} alt={rowData.image} className="shadow-2" width="100" />
-            </>
-        );
-    };
-
     const priceBodyTemplate = (rowData) => {
         return (
             <>
@@ -328,15 +225,6 @@ const Employee = () => {
             <>
                 <span className="p-column-title">Address</span>
                 {rowData.Address}
-            </>
-        );
-    };
-
-    const statusBodyTemplate = (rowData) => {
-        return (
-            <>
-                <span className="p-column-title">Status</span>
-                <span className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}>{rowData.inventoryStatus}</span>
             </>
         );
     };
@@ -440,41 +328,10 @@ const Employee = () => {
                             {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
-                        {/* <div className="field">
-                            <label className="mb-3">Category</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
-                                    <label htmlFor="category1">Accessories</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
-                                    <label htmlFor="category2">Clothing</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
-                                    <label htmlFor="category3">Electronics</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
-                                    <label htmlFor="category4">Fitness</label>
-                                </div>
-                            </div>
-                        </div> */}
-
                         <div className="formgrid grid">
-                            {/* <div className="field col">
-                                <label htmlFor="price">Price</label>
-                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                            </div>
-                            <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                            </div> */}
                             <div className="field col">
                                 <label htmlFor="quantity">Select Designation</label>
                                 <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
-                                {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
                             </div>
                         </div>
                     </Dialog>
@@ -501,37 +358,7 @@ const Employee = () => {
                             {submitted && !product.Address && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
-                        {/* <div className="field">
-                            <label className="mb-3">Category</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
-                                    <label htmlFor="category1">Accessories</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
-                                    <label htmlFor="category2">Clothing</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
-                                    <label htmlFor="category3">Electronics</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
-                                    <label htmlFor="category4">Fitness</label>
-                                </div>
-                            </div>
-                        </div> */}
-
                         <div className="formgrid grid">
-                            {/* <div className="field col">
-                                <label htmlFor="price">Price</label>
-                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                            </div>
-                            <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                            </div> */}
                             <div className="field col">
                                 <label htmlFor="quantity">Select Designation</label>
                                 <InputTextarea id="/." value={product.Designation} disabled required autoFocus className={classNames({ 'p-invalid': submitted && !product.Address })} rows={3} cols={20} />
