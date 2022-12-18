@@ -6,51 +6,96 @@ Hosted Server Link:management-server.database.windows.net
 AdminID:10616280@mydbs.ie 
 
 Database queries
-CREATE TABLE STMS.dbo.salary (
+CREATE TABLE salary (
 	in_hand_salary int,
 	employee_name nvarchar(50),
-	salary int
+	designation_salary int
 )
-CREATE TABLE STMS.dbo.Employee (
+CREATE TABLE Employee (
+	Employee_id int,
 	Employee_age int,
 	employee_name nvarchar(50),
 	Designation nvarchar(50),
 
 )
-CREATE TABLE STMS.dbo.attendance (
-		Present_days int,
-		employee_id int,
-		puchin_date int,
-		puchout_date int,
-		
-)
-CREATE TABLE STMS.dbo.products(
+
+CREATE TABLE products(
 		
 	product_id int,
 	product_name nvarchar(50),
 	price int,
-	exp_date int
+	exp_date int,
+	quantity int,
+	supply nvarchar(50)
 )
-CREATE TABLE STMS.dbo.customers(
+CREATE TABLE customers(
+	cust_id bigint,
 	cust_name nvarchar(50),
 	cust_email nvarchar(50),
-	cust_no int
+	cust_no int,
+	order_id biginit
+	
 )
-CREATE TABLE STMS.dbo.dealers(
+CREATE TABLE dealers(
 	dealer_name nvarchar(50),
 	dealer_email nvarchar(50),
-	dealer_no int
+	dealer_no int,
+	product_no int,
+	location_id int,
+	Product_actual_price int
+)
+CREATE TABLE designation(
+	Dsgn_id int,
+	designation_salary int
+)
+
+CREATE TABLE category(
+	category_id int,
+	category_name nvarchar(50),
+	product_id int
+)
+
+CREATE TABLE Database_users(
+	Employee_id int,
+	Username nvarchar(50),
+	password nvarchar(50)
+)
+CREATE TABLE orders(
+	order_id int,
+	cust_id int,
+	date int,
+	items nvarchar(50),
+	total_cost int,
+	payment_method nvarchar(50)
 )
 
 
 Overview about Store Management system.:
 The STMS provides an illustration of the product inventory in a store, which includes both dealer-supplied items as well as products from a variety of categories.
 The shop's personnel essentially handle management of this.
-All features, including add, update, remove, and modification, may be used in this management system.
+All features, including add, update, remove, and modification, can be used in this management system.
 
 
 CONTRIBUTION:
-As equal Contribution was assigned to each member in the group, SARVESH NITIN BHOSALE handled database setup on Azure, Using Java and Spring Boot Framework rest APIs of Employee and its Authentication was done.
-Secondly JAY HITENDRA SOLANKI handled for firing the data in database in MS Sql server, Using java and Spring Boot Framework rest APIs of Customers and Orders was initiated and for presentation, ppt was made by Jay.
-Consequently RAHUL KISHOR SOGAM handled his work using Java and Spring Boot Framework rest APIs of category of stocks, product and of Dealers.
+As equal Contribution was assigned to each member in the group, 
+SARVESH NITIN BHOSALE handled deploying the database on Azure, Did react and redux setup 
+and integrated template in the particular react application along with that Authentication, Employee , designation and salary modules 
+were also handled by sarvesh where everything from creating rest API's for all the operations in all of this modules along with there 
+integration on frontend was done by him. He also created all the required tables where all the response data can be displayed and user can 
+interact with it and perform CURD operation from UI.
+
+
+Secondly JAY HITENDRA SOLANKI handled for firing the data query in database in MS Sql server for tables like Employee, Customers,Orders,
+Using java and Spring Boot Framework rest APIs of Customers which includes GET CUSTOMERS, BY CUSTOMER ID and rest API of
+Orders was applied into the ECLIPSE where we get ORDERS BY ORDER ID , He also maintained the frontend user interface (UI)
+for the modules where the user could carry out these tasks.
+He also controlled all of the necessary data tables for crud operations as mentioned in his tasks.
+
+
+Consequently RAHUL KISHOR SOGAM handled Java and Spring Boot Framework setup for rest APIs and connection with database to perform crud operations on data.
+Modules category of Inventory, Products and the Dealers for categories are handled by him.
+All the APIs for these modules consists of GetALL,GETBYID,Update,Delete and Insert operation.
+The front end for These modules were also managed by him were the user can perform these operations with the help of frontend UI.
+Frontend UI is designed using react with help of Axios to consume the API data in frontend.
+All the required tables with data to perform crud operations were also managed by him.
 Once our project was near to complete we did testing together and did required updates accordingly.
