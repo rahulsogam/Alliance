@@ -9,7 +9,7 @@ public class SqlQuery {
 	public static final String UPDATE_EMP="UPDATE Employee SET employeeName = ?, employeeAddress= ?,employeeEmail=?,employeePassword=? WHERE employeeID = ?;";
 	public static final String GET_ALL_CUST="select * from Customers";
 	public static final String GET_CUST_BY_ID="select * from Customers where cust_id=?";
-	public static final String GET_ALL_ORDER="select * from orders";
+	public static final String GET_ALL_ORDER="select d.*, c.cust_name from customers c ,orders d where d.cust_id= c.cust_id ";
 	public static final String GET_ORDER_BY_ID = "select * from orders where order_id=?";
 	public static final String DEL_EMP="Delete from employee where employeeId=?";
 	public static final String GET_DESIGNATION="select distinct employeeDesignation from Employee";
