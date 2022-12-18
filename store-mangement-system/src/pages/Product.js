@@ -171,12 +171,13 @@ const Product = () => {
 
         let _products = [...products];
         let _product = { ...product };
-        const index = findIndexById(product.CatId);
-        _products[index] = _product;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Quantity Updated', life: 3000 });
-        setProducts(_products);
-        setProduct(emptyProduct);
+        const index = findIndexById(product.product_id);
+        _products[index] = {..._product,product_Qty:product.update_Qty};
+        console.log(_products)
         await Axios.post("Product/UpdateProductQty", { ProductId: parseInt(product.product_id), ProductQty:parseInt(product.update_Qty) }).then((res) => {
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Quantity Updated', life: 3000 });
+            setProducts(_products);
+            setProduct(emptyProduct);
             setEditDialog(false);
         })
     };
@@ -192,27 +193,27 @@ const Product = () => {
         setDeleteProductDialog(true);
     };
 
-    const deleteProduct = async () => {
-        let _products = products.filter((val) => val.CatId !== product.CatId);
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        await Axios.delete("/Cat/DelCategory", {
-            headers: {
-            },
-            data: {
-                Cat_id: parseInt(product.CatId)
-            }
-        }).then((res) => {
-            console.log(res)
-            setProduct(emptyProduct);
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        })
-    };
+    // const deleteProduct = async () => {
+    //     let _products = products.filter((val) => val.CatId !== product.CatId);
+    //     setProducts(_products);
+    //     setDeleteProductDialog(false);
+    //     await Axios.delete("/Cat/DelCategory", {
+    //         headers: {
+    //         },
+    //         data: {
+    //             Cat_id: parseInt(product.CatId)
+    //         }
+    //     }).then((res) => {
+    //         console.log(res)
+    //         setProduct(emptyProduct);
+    //         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+    //     })
+    // };
 
     const findIndexById = (id) => {
         let index = -1;
         for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+            if (products[i].product_id === id) {
                 index = i;
                 break;
             }
@@ -403,7 +404,7 @@ const Product = () => {
         return (
             <div className="actions">
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => confirmDeleteProduct(rowData)} />
+                {/* <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => confirmDeleteProduct(rowData)} /> */}
             </div>
         );
     };
@@ -430,12 +431,12 @@ const Product = () => {
             <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveEdit} />
         </>
     )
-    const deleteProductDialogFooter = (
-        <>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteProductDialog} />
-            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
-        </>
-    );
+    // const deleteProductDialogFooter = (
+    //     <>
+    //         <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteProductDialog} />
+    //         <Button label="Yes" icon="pi pi-check" className="p-button-text" />
+    //     </>
+    // );
     const deleteProductsDialogFooter = (
         <>
             <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteProductsDialog} />
@@ -476,7 +477,7 @@ const Product = () => {
                         <Column field="product_Qty" header="Product Quantity" body={priceBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
                         <Column field="product_Qty" header="Product Status" body={statusBodyTemplate} sortable headerStyle={{ width: '14%', minWidth: '8rem' }}></Column>
 
-                        <Column body={actionBodyTemplate}></Column>
+                        <Column header="Update Quantity" body={actionBodyTemplate}></Column>
                     </DataTable>
 
                     <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
@@ -577,7 +578,7 @@ const Product = () => {
                         </div>
                     </Dialog>
 
-                    <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+                    {/* <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                             {product && (
@@ -586,7 +587,7 @@ const Product = () => {
                                 </span>
                             )}
                         </div>
-                    </Dialog>
+                    </Dialog> */}
 
                     <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
                         <div className="flex align-items-center justify-content-center">
