@@ -70,7 +70,7 @@ const Customer = () => {
             console.log(err)
         })
         console.log(dropdownValues);
-        // eslint-disable-next-line
+       
     }, []);
 
     const formatCurrency = (value) => {
@@ -98,29 +98,7 @@ const Customer = () => {
     };
 
 
-    // const saveCategory = () => {
-    //     setSubmitted(true);
-
-    //     if (product.name.trim()) {
-    //         let _products = [...products];
-    //         let _product = { ...product };
-    //         if (product.id) {
-    //             const index = findIndexById(product.id);
-
-    //             _products[index] = _product;
-    //             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-    //         } else {
-    //             _product.id = createId();
-    //             _product.image = 'product-placeholder.svg';
-    //             _products.push(_product);
-    //             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    //         }
-
-    //         setProducts(_products);
-    //         setProductDialog(false);
-    //         setProduct(emptyProduct);
-    //     }
-    // };
+   
 
     const saveProduct = async () => {
         setSubmitted(true);
@@ -214,11 +192,7 @@ const Customer = () => {
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     };
 
-    // const onCategoryChange = (e) => {
-    //     let _product = { ...product };
-    //     _product['category'] = e.value;
-    //     setProduct(_product);
-    // };
+   
 
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
@@ -228,33 +202,7 @@ const Customer = () => {
         setProduct(_product);
     };
 
-    // const onInputNumberChange = (e, name) => {
-    //     const val = e.value || 0;
-    //     let _product = { ...product };
-    //     _product[`${name}`] = val;
-
-    //     setProduct(_product);
-    // };
-
-    // const leftToolbarTemplate = () => {
-    //     return (
-    //         <React.Fragment>
-    //             <div className="my-2">
-    //                 <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-    //                 <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
-    //             </div>
-    //         </React.Fragment>
-    //     );
-    // };
-
-    // const rightToolbarTemplate = () => {
-    //     return (
-    //         <React.Fragment>
-    //             <FileUpload mode="basic" accept="image/*" maxFileSize={1000000} label="Import" chooseLabel="Import" className="mr-2 inline-block" />
-    //             <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-    //         </React.Fragment>
-    //     );
-    // };
+    
 
     const codeBodyTemplate = (rowData) => {
 
@@ -387,7 +335,7 @@ const Customer = () => {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                {/* <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar> */}
+                {}
 
                     <DataTable
                         ref={dt}
@@ -428,41 +376,14 @@ const Customer = () => {
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
-                        {/* <div className="field">
-                            <label className="mb-3">Category</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
-                                    <label htmlFor="category1">Accessories</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
-                                    <label htmlFor="category2">Clothing</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
-                                    <label htmlFor="category3">Electronics</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
-                                    <label htmlFor="category4">Fitness</label>
-                                </div>
-                            </div>
-                        </div> */}
+                        {}
 
                         <div className="formgrid grid">
-                            {/* <div className="field col">
-                                <label htmlFor="price">Price</label>
-                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                            </div>
-                            <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                            </div> */}
+                            {}
                             <div className="field col">
                                 <label htmlFor="quantity">Select Dealer</label>
                                 <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
-                                {/* <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly /> */}
+                                {}
                             </div>
                         </div>
                     </Dialog>
@@ -479,37 +400,14 @@ const Customer = () => {
                             {submitted && !product.description && <small className="p-invalid">Enter Description.</small>}
                         </div>
 
-                        {/* <div className="field">
-                            <label className="mb-3">Category</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="Accessories" onChange={onCategoryChange} checked={product.category === 'Accessories'} />
-                                    <label htmlFor="category1">Accessories</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="Clothing" onChange={onCategoryChange} checked={product.category === 'Clothing'} />
-                                    <label htmlFor="category2">Clothing</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="Electronics" onChange={onCategoryChange} checked={product.category === 'Electronics'} />
-                                    <label htmlFor="category3">Electronics</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="Fitness" onChange={onCategoryChange} checked={product.category === 'Fitness'} />
-                                    <label htmlFor="category4">Fitness</label>
-                                </div>
-                            </div>
-                        </div> */}
+                        {}
 
                         <div className="formgrid grid">
                             <div className="field col">
                                 <label htmlFor="price">Dealer ID</label>
                                 <InputText id="price" value={product.CategoryDealer} locale="en-US" disabled />
                             </div>
-                            {/*  <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                            </div> */}
+                            {}
                         </div>
                     </Dialog>
 
